@@ -28,7 +28,7 @@ class Node {
         return this.next;
     }
     public String toString(){
-        return this.data + " " + this.next;
+        return Integer.toString(this.data);
     }
 
 }

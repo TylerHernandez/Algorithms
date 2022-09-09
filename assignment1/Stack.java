@@ -1,45 +1,48 @@
 
 class Stack {
 
-    private Node first_node;
-    private int index;
+    private Node head;
 
     public Stack(){
-        Node first_node = new Node();
+        head = null;
     }
 
+    // Appends a node to the stack.
+    public void push(Node n){
+        n.setNext(head);
+        head = n;
+    }
+
+    // Removes and returns a node from the stack.
     public Node pop(){
-        // Carry current and next node.
-        Node current_node = first_node;
-        Node next_node = first_node.getNext();
-
-        // Stops at last two nodes.
-        while (next_node.getNext() != null){
-            current_node = current_node.getNext();
-            next_node = next_node.getNext();
+        // Retrieve the head as local var, then update global var to the new head.
+        Node n = head;
+        if (head != null){
+            head = head.getNext();
+        } else {
+            System.out.println("Stack is empty");
         }
-
-        // Remove going to pop node from linked list.
-        current_node.setNext(null);
-        return next_node;
+        return n;
     }
 
-
-    // public void append(Node n){
-    // }
-
+    // Checks if there are any nodes in the stack.
     public boolean isEmpty(){
-        if(first_node == null)
+        if(head == null)
             return true;
         else
             return false;
     }
 
-    // public String toString() {
-    //     for (Node x : list) {
-    //         System.out.println(x);
-    //     }
-    //     return "/";
-    // }
+    public String toString() {
+        String str = "";
+
+        // Retrieves head of stack to loop through stack without modifying it.
+        Node tempNode = head;
+        while (tempNode != null){
+            str += (tempNode + ", ");
+            tempNode = tempNode.getNext();
+        }
+        return str;
+    }
 
 }

@@ -1,3 +1,5 @@
+// TODO: Import IO to read from files.
+
 class Main {
     public static void main(String[] args) {
         // Creates Node Class
@@ -9,19 +11,21 @@ class Main {
         secondNode.setData(10);
         thirdNode.setData(15);
         fourthNode.setData(20);
-        firstNode.setNext(secondNode);
-        secondNode.setNext(thirdNode);
-        thirdNode.setNext(fourthNode);
+
 
 
         Stack stack = new Stack();
-
-        // for(Node n = firstNode; n != null; n = n.getNext()) {
-        //     stack.append(n);
-        // }
-
+        stack.push(firstNode);
+        stack.push(secondNode);
+        stack.push(thirdNode);
+        stack.push(fourthNode);
+        System.out.println(stack.pop());
+        
         System.out.println(stack);
 
+        System.out.println(stack.pop());
+
+        System.out.println(stack);
 
     }
 

@@ -1,34 +1,34 @@
 
 class Node {
-    private int data;
+    private char data;
     private Node next;
 
     public Node(){
         data = 0;
         next = null;
     }
-    public Node(int data) {
+    public Node(char data) {
         this.data = data;
         this.next = null;
     }
-    public Node(int data, Node node) {
+    public Node(char data, Node node) {
         this.data = data;
         this.next = node;
     }
-    public void setData(int data) {
+    public void setData(char data) {
         this.data = data;
     }
     public void setNext(Node node) {
         this.next = node;
     }
-    public int getData(){
+    public char getData(){
         return this.data;
     }
     public Node getNext(){
         return this.next;
     }
     public String toString(){
-        return Integer.toString(this.data);
+        return "" + this.data;
     }
 
 }

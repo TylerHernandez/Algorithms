@@ -1,5 +1,3 @@
-// TODO: Import IO to read from files.
-
 class Main {
     public static void main(String[] args) throws Exception {
         // 12 Palindromes in test cases.
@@ -7,31 +5,37 @@ class Main {
 
         Queue queue = new Queue();
 
-        Reader reader = new Reader("assignment1/magicitems.txt");
+        Reader reader = new Reader("INSERT_DIRECTORY_HERE", 0);
 
-        int palindromesFound = 0;
-        int i; // Will hold char as an integer.
-        while ((i = reader.getNextChar()) != -1) {
-            char ch = Character.toUpperCase((char) i);
+        int i = 0; // Will hold char as an integer.
 
-            if (ch == '\n') { // new line detected, start the comparison.
-                System.out.println(stack);
+        // Holds each line 
+        int[] line = reader.getNextLine();
 
-                if (isPalindrome(stack, queue)) {
-                    palindromesFound++;
+        // Until i've reached the end of the file, keep looping
+        while (i != -1) {
+
+            // Loop through line, add each char to stack and queue.
+            for (int x = 0; x < line.length; x++) {
+                char ch = Character.toUpperCase((char) line[x]);
+                if ((ch != ' ') && (ch != ',') && (ch != '.') && (ch != '\'') && (ch != '\n')) {
+                    stack.push(new Node(ch));
+                    queue.enqueue(new Node(ch));
                 }
 
-                queue = new Queue();
-                stack = new Stack();
+            }
 
-            } else if ((ch != ' ') || (ch != ',') || (ch != '.') || (ch != '\'')) { // if character is not a space, add it to the stack and queue.
-                stack.push(new Node(ch));
-                queue.enqueue(new Node(ch));
-            } // Ends space not found.
+            isPalindrome(stack, queue);
 
-        } // Ends while.
+            // Reset queue and stack.
+            queue = new Queue();
+            stack = new Stack();
 
-        System.out.println(palindromesFound);
+            // Grab the next line
+            line = reader.getNextLine();
+            i = line[0];
+
+        } // ends while
 
     }
 
@@ -48,12 +52,18 @@ class Main {
         // Stack length is constantly changing, so record length first.
         int length = stack.length;
 
+        // String to print out if it is a palindrome.
+        String str = "";
+
         for (int i = 0; i < length; i++) {
+            str += queue.getHead().getData();
+
             // Compare each Node's data. If they do not match, return false.
-            if (stack.pop().getData() != queue.Dequeue().getData()) {
+            if (stack.pop().getData() != queue.dequeue().getData()) {
                 return false;
             }
         }
+        System.out.println(str);
         return true;
     }
 

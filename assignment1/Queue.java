@@ -21,7 +21,7 @@ class Queue {
     }
 
     // Removes head from linked list.
-    public Node Dequeue() {
+    public Node dequeue() {
         // Holds head to be dequeued.
         Node temp = head;
         // Sets the new head to be the upcoming first element.
@@ -34,6 +34,10 @@ class Queue {
             return true;
         else
             return false;
+    }
+
+    public Node getHead(){
+        return this.head;
     }
 
     public String toString() {

@@ -4,7 +4,7 @@ class Node {
     private Node next;
 
     public Node(){
-        data = 0;
+        data = ' ';
         next = null;
     }
     public Node(char data) {

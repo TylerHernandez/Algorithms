@@ -1,0 +1,369 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CMPT 435
+% Fall Semester
+% Assignment One
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from: http://www.LaTeXTemplates.com
+% Original author: % Frits Wenneker (http://www.howtotex.com)
+% License: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% Modified by Alan G. Labouseur  - alan@labouseur.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper, 10pt,DIV=13]{scrartcl} 
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,xfrac} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage[lined,linesnumbered,commentsnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{lastpage}
+
+\allsectionsfont{\normalfont\scshape} % Make all section titles in default font and small caps.
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{page \thepage\ of \pageref{LastPage}} % Page numbering for right footer
+
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs.
+
+\binoppenalty=3000
+\relpenalty=3000
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+   \normalfont \normalsize 
+   \textsc{CMPT 435 - Fall 2022 - Dr. Labouseur} \\[10pt] % Header stuff.
+   \horrule{0.5pt} \\[0.25cm] 	% Top horizontal rule
+   \huge Assignment One  \\     	    % Assignment title
+   \horrule{0.5pt} \\[0.25cm] 	% Bottom horizontal rule
+}
+
+\author{Tyler Hernandez \\ \normalsize Tyler.Hernandez1@marist.edu}
+
+\date{\normalsize\today} 	% Today's date.
+
+\begin{document}
+\maketitle % Print the title
+
+\ 
+\ 
+\ 
+\begin{center}
+    This page left blank intentionally.
+\end{center}
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%   start PROBLEM ONE
+%----------------------------------------------------------------------------------------
+\section{The Node Class}
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ]  
+class Node {
+    private char data;
+    private Node next;
+
+    public Node(){
+        data = ' ';
+        next = null;
+    }
+    public Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+    public Node(char data, Node node) {
+        this.data = data;
+        this.next = node;
+    }
+    public void setData(char data) {
+        this.data = data;
+    }
+    public void setNext(Node node) {
+        this.next = node;
+    }
+    public char getData(){
+        return this.data;
+    }
+    public Node getNext(){
+        return this.next;
+    }
+    public String toString(){
+        return "" + this.data;
+    }
+}
+\end{lstlisting}
+
+\subsection{The Node}
+The idea of the $Node$ class is to create a datatype that holds two important pieces of information. One piece, being something valuable to the user of the node- which in the code snippet is a character named $data$. The next piece of information, is arguably the defining piece of a Node. This information is a pointer to the next Node. With this functionality, we are able to create an association between Nodes to simulate a list.
+
+In my implementation, you can create a Node in three different ways. First, in $line\#5$, you can create a Node with no parameters, defaulting to a space character. Second, in $line\#9$, you can create a Node with just a piece of data. And lastly, in $line\#13$, you can create a Node with both a piece of data and a pointer to the next Node.
+
+
+\section{The Stack Class}
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ]
+class Stack {
+
+    private Node head;
+    public int length;
+
+    public Stack() {
+        head = null;
+        length = 0;
+    }
+
+    // Appends a node to the stack.
+    public void push(Node n) {
+        n.setNext(head);
+        head = n;
+        length++;
+    }
+
+    // Removes and returns a node from the stack.
+    public Node pop() {
+        // Retrieve the head as local var, then update global var to the new head.
+        Node n = head;
+        if (head != null) {
+            head = head.getNext();
+            length--;
+        } else {
+            System.out.println("Stack is empty");
+        }
+        return n;
+    }
+
+    // Checks if there are any nodes in the stack.
+    public boolean isEmpty() {
+        if (head == null)
+            return true;
+        else
+            return false;
+    }
+
+    public String toString() {
+        String str = "Head- ";
+
+        // Retrieves head to loop through stack without modifying it.
+        Node tempNode = head;
+
+        while (tempNode != null) {
+            str += (tempNode + ", ");
+            tempNode = tempNode.getNext();
+        }
+        return str + "- Tail";
+    }
+
+}
+\end{lstlisting}
+
+\subsection{The Stack}
+A Stack is a data structure that takes in information and returns it in a Last in first out (LIFO). A real life example of how a stack works is looking at plates in a dining hall. When you take a plate from the stack of plates, you pick up the first. This is the case with the Stack data structure where you always grab the top of the stack whenever you retrieve items from it. 
+
+My implementation of the stack comes with the following methods: push, pop, isEmpty, and toString. And keeps track of the head (or the top) of the stack and the length of the stack.
+-- Essentially, this stack is just a linked list that returns items in a LIFO order.
+
+The push method takes in a Node to append to the stack. It does this by taking the current head of the stack and creating a pointer to it, from the node we are appending to the stack. This also then becomes the new head, therefore we point the 'head' variable to the newly added Node.
+
+The pop method first checks if there is a head in the stack, (meaning it is not empty), and then makes a record of it. We cannot simply return it here and then because we still need to update that the next Node in the stack is now the new head. Afterwards, we return it to the user and it is officially removed from the stack.
+
+The isEmpty method just checks if the head is null, because if the head is null then there cannot possibly be anything inside of the stack.
+
+Lastly, I created a toString method to help me with debugging. This method loops through all existing Nodes in the stack and retrieves their data. Note the toString in Node class which allows us to quickly unwrap the Node to see it's data just by calling it in a print statement.
+
+The length variable was added last to keep track of how many Nodes are in the linked list without having to loop through them each time I request it. This ultimately takes up a little more space, but the trade-off is reduces time complexity of our program if we need to find the length of the stack.
+-- For more info see main.
+
+
+\section{The Queue Class}
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ]
+class Queue {
+
+    private Node head;
+    private Node tail;
+
+    public Queue() {
+        head = null;
+        tail = head;
+    }
+
+    // Appends given node to tail.
+    public void enqueue(Node node) {
+        // First enqueue will have a null head and tail.
+        if ((tail == null) && (head == null)) {
+            head = node;
+            tail = head;
+        } else {
+            tail.setNext(node);
+            tail = node;
+        }
+    }
+
+    // Removes head from linked list.
+    public Node dequeue() {
+        // Holds head to be dequeued.
+        Node temp = head;
+        // Sets the new head to be the upcoming first element.
+        head = head.getNext();
+        return temp;
+    }
+
+    public boolean isEmpty() {
+        if (head == null)
+            return true;
+        else
+            return false;
+    }
+
+    public Node getHead(){
+        return this.head;
+    }
+
+    public String toString() {
+        String str = "Head- ";
+
+        // Retrieves head to loop through queue without modifying it.
+        Node tempNode = head;
+        while (tempNode != null) {
+            str += (tempNode + ", ");
+            tempNode = tempNode.getNext();
+        }
+        return str + "- Tail";
+    }
+}
+\end{lstlisting}
+\subsection{The Queue}
+The Queue Class is similar to the stack class, however differs in 3 key areas. 
+
+For one, the queue holds not only the head, but the tail. This allows us to append Nodes to the end of our linked list in constant time, as well as remove Nodes from the front of our linked list in constant time. The second difference, is the Queue is a First in First Out type of datastructure. Similar to a shopping line with only one register opened; the first customer at the register will be the first customer to leave the store with a purchased item. Every Node waits their own turn to leave the Queue. Lastly, the queue uses different names for its remove and append functions. For remove, you use dequeue. For append, you use enqueue.
+
+
+\section{The Main Method}
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ]
+class Main {
+    public static void main(String[] args) throws Exception {
+        // 12 Palindromes in test cases.
+        Stack stack = new Stack();
+
+        Queue queue = new Queue();
+
+        Reader reader = new Reader("INSERT_DIRECTORY_HERE", 0);
+
+        int i = 0; // Will hold char as an integer.
+
+        // Holds each line 
+        int[] line = reader.getNextLine();
+
+        // Until i've reached the end of the file, keep looping
+        while (i != -1) {
+
+            // Loop through line, add each char to stack and queue.
+            for (int x = 0; x < line.length; x++) {
+                char ch = Character.toUpperCase((char) line[x]);
+                if ((ch != ' ') && (ch != ',') && (ch != '.') 
+                && (ch != '\'') && (ch != '\n')) {
+                    stack.push(new Node(ch));
+                    queue.enqueue(new Node(ch));
+                }
+
+            }
+
+            isPalindrome(stack, queue);
+
+            // Reset queue and stack.
+            queue = new Queue();
+            stack = new Stack();
+
+            // Grab the next line
+            line = reader.getNextLine();
+            i = line[0];
+
+        } // ends while
+
+    }
+
+    // Prints out palindromes found and returns boolean isPalindrome.
+    public static Boolean isPalindrome(Stack stack, Queue queue) {
+        // If both are empty, return true. If only one is empty, return false.
+        if (stack.isEmpty() && queue.isEmpty()) {
+            System.out.println("");
+            return true;
+        } else if (stack.isEmpty() && !queue.isEmpty()) {
+            return false;
+        } else if (!stack.isEmpty() && queue.isEmpty()) {
+            return false;
+        }
+
+        // Stack length is constantly changing, so record length first.
+        int length = stack.length;
+
+        // String to print out if it is a palindrome.
+        String str = "";
+
+        for (int i = 0; i < length; i++) {
+            str += queue.getHead().getData();
+
+            // Compare each Node's data. If they do not match, return false.
+            if (stack.pop().getData() != queue.dequeue().getData()) {
+                return false;
+            }
+        }
+        System.out.println(str);
+        return true;
+    }
+
+}
+\end{lstlisting}
+\subsection{Main}
+
+The main class, and main method, retains all the action for the assignment. 
+
+One interesting function I'd like to point out is my isPalindrome function. This is a function I particularly enjoyed writing. I had to think of edge cases for if a string is a palindrome and I made design choices such as taking in the queue and stack as parameters. This also lead me to track length in the stack. I figured I only needed to see the length of the stack or the queue since they will be appending the same amount of things therefore should always be the same length for this assignment. I ultimately decided the stack should use an extra global variable to balance out the fact that the queue already had two global variables.
+
+In the main method, I am using a reader which gathers characters of the line as an int. I could have changed this immediately to a char and used a char array, however I noticed in the documentation of the reader that it returns -1 if it has reached the end of the file. -1 casted to a char creates a weird box like digit which was not useful for me because I could not actually copy and paste that into my java code to see if it every showed up. 
+
+This brings me to why I use a while i does not equal -1 loop.
+
+Lastly I loop through each line I take in from the file, add each letter of the line to the queue and stack, ignoring capitalization, punctuation, and spaces, compare the stack and queue using my isPalindrome function, then reset my variables to get ready for the next iteration.
+
+
+\end{document}

@@ -39,9 +39,11 @@ class Main {
 
     }
 
+    // Prints out palindromes found and returns boolean isPalindrome.
     public static Boolean isPalindrome(Stack stack, Queue queue) {
         // If both are empty, return true. If only one is empty, return false.
         if (stack.isEmpty() && queue.isEmpty()) {
+            System.out.println("");
             return true;
         } else if (stack.isEmpty() && !queue.isEmpty()) {
             return false;

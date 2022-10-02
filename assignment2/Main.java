@@ -4,7 +4,7 @@ class Main {
         Reader reader = new Reader("assignment1/magicitems.txt");
 
         // Characters we will ignore when reading from the file.
-        char[] ignoreList = { ' ', ',', '.', '\'' };
+        char[] ignoreList = { ' ', ',', '.', '\'', '-', '+' };
 
         int quickCount = 0;
         int selectionCount = 0;
@@ -25,7 +25,7 @@ class Main {
                 line = Utils.removeLastElementOfArray(line);
             }
 
-            printArray(line);
+            Utils.printArray(line);
             // Each sorting method does not save the value into line.
             // And each sort will return the amount of comparisons it performed.
 
@@ -53,7 +53,28 @@ class Main {
 
     // Without Recursion
     public static int selectionSort(char[] line) {
-        return 1;
+        int recordedComparisons = 0;
+
+        // loop over entire array with ptr1.
+        for (int ptr1 = 0; ptr1 < line.length - 1; ptr1++) {
+            recordedComparisons++; // (ptr1 < line.length - 1)
+
+            // Retrieve index of the earliest alphabetical character in the subarray.
+            int minimum = ptr1;
+            for (int i = ptr1 + 1; i < line.length; i++) {
+                if (line[i] < line[minimum]) {
+                    minimum = i;
+                }
+                recordedComparisons += 2; // (i < line.length) and if statement.
+            }
+
+            // Swap the found minimum element with line[ptr1].
+            char temp = line[minimum]; // record before writing over.
+            line[minimum] = line[ptr1];
+            line[ptr1] = temp;
+        }
+        Utils.printArray(line);
+        return recordedComparisons;
     }
 
     // Insertion Sort! (does not use recursion).
@@ -78,27 +99,6 @@ class Main {
     // Recursive merge sort: Also, divide and conquer!
     public static int mergeSort(char[] line) {
         return 1;
-    }
-
-    // I kept wanting to see the output of the array to make sure it was sorted and
-    // kept getting
-    // "[I@18b4aac2", hence the creation of this function.
-    public static void printArray(int[] array) {
-        System.out.print("[ ");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print((char) array[i] + ", ");
-        }
-        System.out.println("]");
-        System.out.println();
-    }
-
-    public static void printArray(char[] array) {
-        System.out.print("[ ");
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + ", ");
-        }
-        System.out.println("]");
-        System.out.println();
     }
 
 }

@@ -14,7 +14,7 @@ class Main {
         // Holds each line
         char[] line = reader.getNextLineOfChars(ignoreList, true);
 
-        // Until i've reached the end of the file, keep looping.
+        // Until we've reached the end of the file, keep looping.
         // Even empty lines in the file will have at least a '\n' character.
         while (line.length > 0) {
             // Though, we must ignore '\n' characters manually in order to keep looping

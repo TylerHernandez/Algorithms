@@ -1,15 +1,17 @@
+import java.util.Random;
+
 class Main {
+
+    static int quickCount = 0;
+    static int selectionCount = 0;
+    static int insertionCount = 0;
+    static int mergeCount = 0;
 
     public static void main(String[] args) throws Exception {
         Reader reader = new Reader("assignment1/magicitems.txt");
 
         // Characters we will ignore when reading from the file.
         char[] ignoreList = { ' ', ',', '.', '\'', '-', '+' };
-
-        int quickCount = 0;
-        int selectionCount = 0;
-        int insertionCount = 0;
-        int mergeCount = 0;
 
         // Holds each line
         char[] line = reader.getNextLineOfChars(ignoreList, true);
@@ -25,30 +27,39 @@ class Main {
                 line = Utils.removeLastElementOfArray(line);
             }
 
-            Utils.printArray(line);
-            // Each sorting method does not save the value into line.
-            // And each sort will return the amount of comparisons it performed.
+            char[] ORIGINAL_LINE = line;
 
-            quickCount += quickSort(line);
-            selectionCount += selectionSort(line);
+            // These sorts will return the amount of comparisons they performed.
+
+            // Insertion Sort!
             insertionCount += insertionSort(line);
-            mergeCount += mergeSort(line);
+            line = ORIGINAL_LINE;
+
+            // Selection Sort!
+            selectionCount += selectionSort(line);
+            line = ORIGINAL_LINE;
+
+            // Recursive functions in java are trickier when it comes to returning values,
+            // soooo... global variables.
+
+            // Merge Sort!
+            mergeSort(line, 0, line.length - 1);
+            line = ORIGINAL_LINE;
+
+            // Quick Sort!
+            // quickSort(line);
+            // line = ORIGINAL_LINE;
 
             // Grab the next line
             line = reader.getNextLineOfChars(ignoreList, true);
 
         } // ends while
 
-        System.out.println("Quick sort: " + quickCount);
-        System.out.println("Selection sort: " + selectionCount);
         System.out.println("Insertion sort: " + insertionCount);
+        System.out.println("Selection sort: " + selectionCount);
         System.out.println("Merge sort: " + mergeCount);
+        System.out.println("Quick sort: " + quickCount);
 
-    }
-
-    // Recursive quickSort: divide and conquer!
-    public static int quickSort(char[] line) {
-        return 1;
     }
 
     // Without Recursion
@@ -73,7 +84,7 @@ class Main {
             line[minimum] = line[ptr1];
             line[ptr1] = temp;
         }
-        Utils.printArray(line);
+        // Utils.printArray(line);
         return recordedComparisons;
     }
 
@@ -97,8 +108,165 @@ class Main {
     }
 
     // Recursive merge sort: Also, divide and conquer!
-    public static int mergeSort(char[] line) {
+    public static void mergeSort(char[] array, int low, int high) {
+        if (high <= low) {
+            mergeCount++;
+            return; // base case. you know, in another language i'd be able to return any type and
+                    // this would be a heck of a lot more convenient.
+        }
+        int mid = (low + high) / 2;
+        mergeSort(array, low, mid);// divide in to left array
+        mergeSort(array, mid + 1, high);// divide into right array
+        merge(array, low, mid, high); // stitch arrays back together.
+    }
+
+    public static void merge(char[] array, int low, int mid, int high) {
+        // Creating temporary subarrays
+        char leftArray[] = new char[mid - low + 1];
+        char rightArray[] = new char[high - mid];
+
+        // Copying our subarrays into temporaries
+        for (int i = 0; i < leftArray.length; i++) {
+            leftArray[i] = array[low + i];
+        }
+        for (int i = 0; i < rightArray.length; i++) {
+            rightArray[i] = array[mid + i + 1];
+        }
+        // Iterators containing current index of temp subarrays
+        int leftIndex = 0;
+        int rightIndex = 0;
+
+        // Copying from leftArray and rightArray back into array
+        for (int i = low; i < high + 1; i++) {
+            // If there are still uncopied elements in R and L, copy minimum of the two
+            if (leftIndex < leftArray.length && rightIndex < rightArray.length) {
+                mergeCount++;
+                if (leftArray[leftIndex] < rightArray[rightIndex]) {
+                    mergeCount++;
+                    array[i] = leftArray[leftIndex];
+                    leftIndex++;
+                } else {
+                    array[i] = rightArray[rightIndex];
+                    rightIndex++;
+                }
+            } else if (leftIndex < leftArray.length) {
+                mergeCount++;
+                // If all elements have been copied from rightArray, copy rest of leftArray
+                array[i] = leftArray[leftIndex];
+                leftIndex++;
+            } else if (rightIndex < rightArray.length) {
+                mergeCount++;
+                // If all elements have been copied from leftArray, copy rest of rightArray
+                array[i] = rightArray[rightIndex];
+                rightIndex++;
+            }
+        }
+    }
+
+    // Recursive quickSort: divide and conquer!
+    public static void quickSort(char[] line, int left, int right) {
+        int pivot;
+        if (left < right) {
+
+            quickCount++; // count this as a comparison (not sure if this is right)
+            pivot = getPivot(line);
+            quickSort(line, left, pivot - 1);
+            quickSort(line, pivot + 1, right);
+        }
+    }
+
+    // Select small amt of random indexes in list and get median. 
+    public static int getPivot(char[] line) {
+        int n = line.length;
+
+        if (n <= 0) {
+            return -1;
+        } else if (n <= 3) { // n is between 1 and 3.
+            // grab median of all 3.
+
+            // grab the largest number.
+            int max = line[0];
+            int maxIndex = 0;
+
+            if (line[1] > max) {
+                max = line[1];
+                maxIndex = 1;
+            }
+            if (line[2] > max) {
+                max = line[2];
+                maxIndex = 2;
+            }
+
+            // grab the smallest number.
+
+            int min = line[0];
+            int minIndex = 0;
+            // 0, 3, 1
+
+            if (line[1] < min) {
+                min = line[1];
+                minIndex = 1;
+            }
+            if (line[2] < min) {
+                min = line[2];
+                minIndex = 2;
+            }
+
+            // if largest is the smallest, return 1. all numbers are already sorted.
+            if (minIndex == maxIndex) {
+                return 1;
+            } else {
+                // deduce number that hasn't been grabbed, that is the median.
+                if ((minIndex != 0) && (minIndex != 0))
+                    return 0;
+                if ((minIndex != 1) && (minIndex != 1))
+                    return 1;
+                if ((minIndex != 2) && (minIndex != 2))
+                    return 2;
+            }
+        } else { // n > 3. Grab 3 and return the median's index in line[].
+
+            int first = 0;
+            int last = n - 1;
+            Random rand = new Random();
+            int random = rand.nextInt(1, n - 2);
+
+            // Results will return 1, 2, or 3. Based on the first, second, and third
+            // parameter given.
+            int results = medianOfThree(line[first], line[last], line[random]);
+            if (results == 1) {
+                return first;
+            } else if (results == 2) {
+                return last;
+            } else {
+                return random;
+            }
+        }
         return 1;
+    } // the fact that this function is constant time is hilarious... hopefully it'll be used for big arrays!
+
+    // Returns indexes of parameters one, two, and three rather than the number
+    // themselves.
+    public static int medianOfThree(int one, int two, int three) {
+        // 6 permutations with three numbers.
+
+        if (one > two) {
+            if (two > three) {
+                return 2;
+            } else if (one > three) {
+                return 3;
+            } else {
+                return 1;
+            }
+        } else {
+            if (one > three) {
+                return 1;
+            } else if (two > three) {
+                return 3;
+            } else {
+                return 2;
+            }
+        }
     }
 
 }

@@ -41,33 +41,31 @@ class Main {
 
         } // ends while
 
-        Utils.printArray(fullText);
-
-            char[] ORIGINAL_LINE = line;
+            String[] ORIGINAL_TEXT = fullText;
 
             // These sorts will return the amount of comparisons they performed.
 
             // Insertion Sort!
-            insertionCount += insertionSort(line);
-            line = ORIGINAL_LINE;
+            insertionCount += insertionSort(fullText);
+            fullText = ORIGINAL_TEXT;
 
             // Selection Sort!
             selectionCount += selectionSort(line);
-            line = ORIGINAL_LINE;
+            fullText = ORIGINAL_TEXT;
 
             // Recursive functions in java are trickier when it comes to returning values,
             // soooo... global variables.
 
             // Merge Sort!
             mergeSort(line, 0, line.length - 1);
-            line = ORIGINAL_LINE;
+            fullText = ORIGINAL_TEXT;
 
             // Quick Sort!
             // quickSort(line);
-            // line = ORIGINAL_LINE;
+            // fullText = ORIGINAL_TEXT;
 
 
-        // System.out.println("Insertion sort: " + insertionCount);
+        System.out.println("Insertion sort: " + insertionCount);
         // System.out.println("Selection sort: " + selectionCount);
         // System.out.println("Merge sort: " + mergeCount);
         // System.out.println("Quick sort: " + quickCount);
@@ -101,16 +99,15 @@ class Main {
     }
 
     // Insertion Sort! (does not use recursion).
-    public static int insertionSort(char[] line) {
+    public static int insertionSort(String[] line) {
         int recordedComparisons = 0;
         for (int ptr1 = 1; ptr1 < line.length; ptr1++) { // we do not need to compare the first index.
-            recordedComparisons++; // one comparison (ptr1 < line.length).
-            char key = line[ptr1]; // record our character to copy over.
+            String key = line[ptr1]; // record our character to copy over.
             int ptr2 = ptr1 - 1;
 
             // Moves over every character greater than our key by one.
-            while (ptr2 >= 0 && line[ptr2] > key) { // this counts as two comparisons.
-                recordedComparisons += 2;
+            while (ptr2 >= 0 && line[ptr2].compareTo(key) >= 0) { // this counts as two comparisons.
+                recordedComparisons ++;
                 line[ptr2 + 1] = line[ptr2];
                 ptr2--;
             }

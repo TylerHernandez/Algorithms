@@ -2,10 +2,14 @@ import java.util.Random;
 
 class QuickSort {
 
-    static int quickCount = 0;
+    int quickCount;
+
+    QuickSort(){
+        this.quickCount = 0;
+    }
 
     // A utility function to swap two elements
-    static void swap(String[] arr, int i, int j) {
+    void swap(String[] arr, int i, int j) {
         String temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
@@ -18,7 +22,7 @@ class QuickSort {
      * to left of pivot and all greater elements to right
      * of pivot
      */
-    static int partition(String[] arr, int low, int high) {
+    int partition(String[] arr, int low, int high) {
 
         // pivot
         String pivot = arr[getPivot(arr)];
@@ -50,7 +54,7 @@ class QuickSort {
      * low --> Starting index,
      * high --> Ending index
      */
-    static void sort(String[] arr, int low, int high) {
+    void sort(String[] arr, int low, int high) {
         if (low < high) {
 
             // pi is partitioning index, arr[p]
@@ -65,7 +69,7 @@ class QuickSort {
     }
 
     // Select small amt of random indexes in list and get median.
-    public static int getPivot(String[] line) {
+    int getPivot(String[] line) {
         int n = line.length;
 
         if (n <= 0) {
@@ -146,7 +150,7 @@ class QuickSort {
 
     // Returns indexes of parameters one, two, and three rather than the number
     // themselves.
-    public static int medianOfThree(String one, String two, String three) {
+    int medianOfThree(String one, String two, String three) {
         // 6 permutations with three numbers.
 
         if (one.compareTo(two) > 0) {

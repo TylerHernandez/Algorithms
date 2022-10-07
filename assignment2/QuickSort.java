@@ -150,7 +150,7 @@ class QuickSort {
 
     // Returns indexes of parameters one, two, and three rather than the number
     // themselves.
-    int medianOfThree(String one, String two, String three) {
+    public static int medianOfThree(String one, String two, String three) {
         // 6 permutations with three numbers.
 
         if (one.compareTo(two) > 0) {

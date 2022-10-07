@@ -4,8 +4,11 @@ class Main {
     static int selectionCount = 0;
     static int insertionCount = 0;
 
+    // Driver for Assignment 2.
     public static void main(String[] args) throws Exception {
         Reader reader = new Reader("./magicitems.txt");
+        // I know you said to just put "magicitems.txt", but that was not working
+        // regardless of whatever directory I inserted the file into.
 
         // Characters we will ignore when reading from the file.
         char[] ignoreList = { ' ', ',', '.', '\'', '-', '+' };
@@ -111,19 +114,5 @@ class Main {
         }
         return recordedComparisons;
     }
-
-    // // Recursive quickSort: divide and conquer!
-    // public static void quickSort(String[] line, int left, int right) {
-    // int pivot;
-    // if (left < right) {
-
-    // quickCount++;
-    // pivot = getPivot(line);
-    // quickSort(line, left, pivot - 1);
-    // quickSort(line, pivot + 1, right);
-    // }
-    // }
-
-   
 
 }

@@ -108,26 +108,25 @@ class Main {
     }
 
     // Recursive merge sort: Also, divide and conquer!
-    public static void mergeSort(char[] array, int low, int high) {
-        if (high <= low) {
-            mergeCount++;
+    public static void mergeSort(char[] array, int left, int right) {
+        if (right <= left) {
             return; // base case. you know, in another language i'd be able to return any type and
                     // this would be a heck of a lot more convenient.
         }
-        int mid = (low + high) / 2;
-        mergeSort(array, low, mid);// divide in to left array
-        mergeSort(array, mid + 1, high);// divide into right array
-        merge(array, low, mid, high); // stitch arrays back together.
+        int mid = (left + right) / 2;
+        mergeSort(array, left, mid);// divide in to left array
+        mergeSort(array, mid + 1, right);// divide into right array
+        merge(array, left, mid, right); // stitch arrays back together.
     }
 
-    public static void merge(char[] array, int low, int mid, int high) {
+    public static void merge(char[] array, int left, int mid, int right) {
         // Creating temporary subarrays
-        char leftArray[] = new char[mid - low + 1];
-        char rightArray[] = new char[high - mid];
+        char leftArray[] = new char[mid - left + 1];
+        char rightArray[] = new char[right - mid];
 
         // Copying our subarrays into temporaries
         for (int i = 0; i < leftArray.length; i++) {
-            leftArray[i] = array[low + i];
+            leftArray[i] = array[left + i];
         }
         for (int i = 0; i < rightArray.length; i++) {
             rightArray[i] = array[mid + i + 1];
@@ -137,12 +136,10 @@ class Main {
         int rightIndex = 0;
 
         // Copying from leftArray and rightArray back into array
-        for (int i = low; i < high + 1; i++) {
+        for (int i = left; i < right + 1; i++) {
             // If there are still uncopied elements in R and L, copy minimum of the two
             if (leftIndex < leftArray.length && rightIndex < rightArray.length) {
-                mergeCount++;
                 if (leftArray[leftIndex] < rightArray[rightIndex]) {
-                    mergeCount++;
                     array[i] = leftArray[leftIndex];
                     leftIndex++;
                 } else {
@@ -150,17 +147,16 @@ class Main {
                     rightIndex++;
                 }
             } else if (leftIndex < leftArray.length) {
-                mergeCount++;
                 // If all elements have been copied from rightArray, copy rest of leftArray
                 array[i] = leftArray[leftIndex];
                 leftIndex++;
             } else if (rightIndex < rightArray.length) {
-                mergeCount++;
                 // If all elements have been copied from leftArray, copy rest of rightArray
                 array[i] = rightArray[rightIndex];
                 rightIndex++;
             }
         }
+        mergeCount++;
     }
 
     // Recursive quickSort: divide and conquer!

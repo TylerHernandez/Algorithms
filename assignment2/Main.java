@@ -13,8 +13,12 @@ class Main {
         // Characters we will ignore when reading from the file.
         char[] ignoreList = { ' ', ',', '.', '\'', '-', '+' };
 
-        // Holds each line
+        // Holds each char of a line
         char[] line = reader.getNextLineOfChars(ignoreList, true);
+
+        // Holds each line as a string
+        String[] fullText = new String[0]; // Start the array at no length in case given an empty list.
+
 
         // Until we've reached the end of the file, keep looping.
         // Even empty lines in the file will have at least a '\n' character.
@@ -26,6 +30,18 @@ class Main {
                 // in the last line).
                 line = Utils.removeLastElementOfArray(line);
             }
+
+            // Expand array by one everytime we add a new value to it.
+            fullText = Utils.expandArrayByOne(fullText);
+            // Takes line of characters and puts them into fullText as a concatted string.
+            fullText[fullText.length - 1] = String.valueOf(line);
+
+            // Grab the next line
+            line = reader.getNextLineOfChars(ignoreList, true);
+
+        } // ends while
+
+        Utils.printArray(fullText);
 
             char[] ORIGINAL_LINE = line;
 
@@ -50,15 +66,11 @@ class Main {
             // quickSort(line);
             // line = ORIGINAL_LINE;
 
-            // Grab the next line
-            line = reader.getNextLineOfChars(ignoreList, true);
 
-        } // ends while
-
-        System.out.println("Insertion sort: " + insertionCount);
-        System.out.println("Selection sort: " + selectionCount);
-        System.out.println("Merge sort: " + mergeCount);
-        System.out.println("Quick sort: " + quickCount);
+        // System.out.println("Insertion sort: " + insertionCount);
+        // System.out.println("Selection sort: " + selectionCount);
+        // System.out.println("Merge sort: " + mergeCount);
+        // System.out.println("Quick sort: " + quickCount);
 
     }
 

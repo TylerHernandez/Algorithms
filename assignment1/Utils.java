@@ -14,6 +14,12 @@ class Utils {
         return newArray;
     }
 
+    public static String[] expandArrayByOne(String[] originalArray) {
+        String[] newArray = new String[originalArray.length + 1];
+        System.arraycopy(originalArray, 0, newArray, 0, originalArray.length);
+        return newArray;
+    }
+
     // removes last element of the array... I wouldnt give it an empty array if I
     // were you.
     public static char[] removeLastElementOfArray(char[] originalArray) {
@@ -41,6 +47,21 @@ class Utils {
     }
 
     public static void printArray(char[] array) {
+        if (array.length == 0) {
+            System.out.println("[ ]");
+            System.out.println();
+        } else {
+            System.out.print("[ ");
+            for (int i = 0; i < array.length - 1; i++) {
+                System.out.print(array[i] + ", ");
+            }
+            System.out.print(array[array.length - 1]);
+            System.out.println(" ]");
+            System.out.println();
+        }
+    }
+
+    public static void printArray(String[] array) {
         if (array.length == 0) {
             System.out.println("[ ]");
             System.out.println();

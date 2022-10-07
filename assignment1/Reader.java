@@ -11,11 +11,11 @@ public class Reader {
     FileReader reader;
     int index;
 
-    public Reader(String fileLocation) throws Exception {
+    public Reader(String fileLocation, int num) throws Exception {
         reader = new FileReader(Utils.DIRECTORY + fileLocation);
     }
 
-    public Reader(String fileLocation, int num) throws Exception {
+    public Reader(String fileLocation) throws Exception {
         reader = new FileReader(fileLocation);
     }
 

@@ -8,7 +8,7 @@ class Main {
     static int mergeCount = 0;
 
     public static void main(String[] args) throws Exception {
-        Reader reader = new Reader("assignment1/magicitems.txt");
+        Reader reader = new Reader("./magicitems.txt", 0);
 
         // Characters we will ignore when reading from the file.
         char[] ignoreList = { ' ', ',', '.', '\'', '-', '+' };

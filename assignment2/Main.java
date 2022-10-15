@@ -1,3 +1,5 @@
+import Utils.java;
+
 class Main {
 
     static int quickCount = 0;

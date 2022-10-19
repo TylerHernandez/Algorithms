@@ -1,3 +1,5 @@
+import java.util.Random;
+import java.util.Arrays;
 
 class Main {
 
@@ -34,10 +36,42 @@ class Main {
             line = reader.getNextLineOfChars(ignoreList, true);
         } // ends while
 
+        // Unsorted Original Text.
         String[] ORIGINAL_TEXT = fullText;
 
-        
+        // Sort fullText.
+        Arrays.sort(fullText);
 
+        // Pick 42 random addresses in magicitems.txt
+        int[] randomAddresses = new int[42];
+        Random rand = new Random();
+        for (int i = 0; i < 42; i++) {
+            randomAddresses[i] = rand.nextInt(0, ORIGINAL_TEXT.length);
+        }
+
+        int linearSearchCounter = 0;
+
+        // Loop over randomAddresses and plug each into a linear search.
+        for (int i = 0; i < randomAddresses.length; i++) {
+            // Linear search for each address.
+            linearSearchCounter += linearSearch(randomAddresses[i], fullText);
+        }
+
+        System.out.println(linearSearchCounter / 42);
 
     }
+
+    // Performs a linearSearch for a givenAddress over a givenArray. Returns number
+    // of comparisons.
+    public static int linearSearch(int givenAddress, String[] givenArray) {
+        int counter = 0;
+        for (int i = 0; i < givenArray.length; i++) {
+            if (i == givenAddress) {
+                break;
+            }
+            counter++;
+        }
+        return counter;
+    }
+
 }

@@ -59,6 +59,16 @@ class Main {
 
         System.out.println(linearSearchCounter / 42);
 
+        int binarySearchCounter = 0;
+
+        // Loop over randomAddresses and plug each into a linear search.
+        //for (int i = 0; i < randomAddresses.length; i++) {
+        // Linear search for each address.
+        binarySearchCounter += binarySearch(83, fullText, 0, fullText.length, 0);
+       // }
+
+        System.out.println(binarySearchCounter / 42);
+
     }
 
     // Performs a linearSearch for a givenAddress over a givenArray. Returns number
@@ -72,6 +82,42 @@ class Main {
             counter++;
         }
         return counter;
+    }
+
+    // Performs a binary search for a given Address over a given Array, considering
+    // min and max bounds for our recursive calls to focus on. Returns number of
+    // comparisons taken.
+    public static int binarySearch(int givenAddress, String[] givenArray, int minAddress, int maxAddress, int counter) {
+        System.out.println("iteration-");
+        int midPoint = (int) Math.floor((minAddress + maxAddress / 2));
+        System.out.println(counter);
+
+        // left and right pointer have not intersected.
+        if (minAddress <= maxAddress) {
+            counter++;
+
+            // Item found, end recursive calls.
+            if (givenAddress == midPoint) {
+                return counter;
+            }
+
+            // Not in this part of the array, narrow down array bounds by 1/2 (lowering the
+            // cieling).
+            else if (givenAddress < midPoint) {
+                counter++;
+                return binarySearch(givenAddress, givenArray, minAddress, midPoint - 1, counter);
+            }
+
+            // Not in this part of the array, narrow down array bounds by 1/2 (increasing
+            // the floor).
+            else {
+                return binarySearch(givenAddress, givenArray, midPoint - 1, maxAddress, counter);
+            }
+        } else {
+            System.out.println("Item was not found. Took " + counter + " comparisons.");
+            return counter;
+        }
+
     }
 
 }

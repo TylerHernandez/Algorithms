@@ -1,5 +1,4 @@
 import java.util.Random;
-import java.util.Arrays;
 
 class Main {
 
@@ -43,7 +42,7 @@ class Main {
         String[] ORIGINAL_TEXT = fullText;
 
         // Sort fullText.
-        Arrays.sort(fullText);
+        fullText = insertionSort(fullText);
 
         // Pick 42 random addresses in magicitems.txt
         String[] randomAddresses = new String[42];
@@ -116,6 +115,22 @@ class Main {
         }
         return foundAddress;
 
+    }
+
+    // Insertion Sort from previous assignment.
+    public static String[] insertionSort(String[] arr) {
+        for (int ptr1 = 1; ptr1 < arr.length; ptr1++) {
+            String key = arr[ptr1]; // record our character to copy over.
+            int ptr2 = ptr1 - 1;
+
+            // Moves over every character greater than our key by one.
+            while (ptr2 >= 0 && arr[ptr2].compareTo(key) >= 0) {
+                arr[ptr2 + 1] = arr[ptr2];
+                ptr2--;
+            }
+            arr[ptr2 + 1] = key; // paste over (insert) our recorded character.
+        }
+        return arr;
     }
 
 }

@@ -3,6 +3,9 @@ import java.util.Arrays;
 
 class Main {
 
+    public static int linearCounter;
+    public static int binaryCounter;
+
     // Driver for Assignment 3.
     public static void main(String[] args) throws Exception {
         Reader reader = new Reader("./magicitems.txt");
@@ -43,80 +46,75 @@ class Main {
         Arrays.sort(fullText);
 
         // Pick 42 random addresses in magicitems.txt
-        int[] randomAddresses = new int[42];
+        String[] randomAddresses = new String[42];
         Random rand = new Random();
         for (int i = 0; i < 42; i++) {
-            randomAddresses[i] = rand.nextInt(0, ORIGINAL_TEXT.length);
+            randomAddresses[i] = ORIGINAL_TEXT[rand.nextInt(0, ORIGINAL_TEXT.length)].toUpperCase();
         }
 
-        int linearSearchCounter = 0;
-
-        // Loop over randomAddresses and plug each into a linear search.
+        // Linear search with our random addresses!
         for (int i = 0; i < randomAddresses.length; i++) {
             // Linear search for each address.
-            linearSearchCounter += linearSearch(randomAddresses[i], fullText);
+            linearSearch(randomAddresses[i], fullText);
         }
 
-        System.out.println(linearSearchCounter / 42);
+        // Binary search with our random addresses!
+        for (int i = 0; i < randomAddresses.length; i++) {
+            // Binary search for each address.
+            binarySearch(randomAddresses[i], fullText, 0, fullText.length);
+        }
 
-        int binarySearchCounter = 0;
-
-        // Loop over randomAddresses and plug each into a linear search.
-        //for (int i = 0; i < randomAddresses.length; i++) {
-        // Linear search for each address.
-        binarySearchCounter += binarySearch(83, fullText, 0, fullText.length, 0);
-       // }
-
-        System.out.println(binarySearchCounter / 42);
+        System.out.println("Linear Search Average: " + linearCounter / 42);
+        System.out.println("Binary Search Average: " + binaryCounter / 42);
 
     }
 
-    // Performs a linearSearch for a givenAddress over a givenArray. Returns number
-    // of comparisons.
-    public static int linearSearch(int givenAddress, String[] givenArray) {
-        int counter = 0;
+    // Performs a linearSearch for a target string over a given array. Returns index
+    // in array of where target is found.
+    public static int linearSearch(String targetString, String[] givenArray) {
+        int foundAddress = -1; // Initializes at -1 in case not found.
+
         for (int i = 0; i < givenArray.length; i++) {
-            if (i == givenAddress) {
+            linearCounter++;
+
+            if (givenArray[i].equals(targetString)) {
+                foundAddress = i;
                 break;
             }
-            counter++;
         }
-        return counter;
+        return foundAddress;
     }
 
-    // Performs a binary search for a given Address over a given Array, considering
-    // min and max bounds for our recursive calls to focus on. Returns number of
-    // comparisons taken.
-    public static int binarySearch(int givenAddress, String[] givenArray, int minAddress, int maxAddress, int counter) {
-        System.out.println("iteration-");
-        int midPoint = (int) Math.floor((minAddress + maxAddress / 2));
-        System.out.println(counter);
+    // Performs a binary search for a target string over a given Array, considering
+    // min and max bounds for our recursive calls to focus on. Returns index of
+    // where targetString exists in array or -1 if not found.
+    public static int binarySearch(String targetString, String[] givenArray, int minAddress, int maxAddress) {
+        int foundAddress = -1; // Initializes at -1 in case not found.
+        int midPoint = (int) ((minAddress + maxAddress) / 2);
 
-        // left and right pointer have not intersected.
+        // left and right pointer have not crossed.
         if (minAddress <= maxAddress) {
-            counter++;
+            binaryCounter++;
 
             // Item found, end recursive calls.
-            if (givenAddress == midPoint) {
-                return counter;
+            if (givenArray[midPoint].equals(targetString)) {
+                binaryCounter++;
+                foundAddress = midPoint;
             }
 
             // Not in this part of the array, narrow down array bounds by 1/2 (lowering the
             // cieling).
-            else if (givenAddress < midPoint) {
-                counter++;
-                return binarySearch(givenAddress, givenArray, minAddress, midPoint - 1, counter);
+            else if (givenArray[midPoint].compareTo(targetString) > 0) {
+                return binarySearch(targetString, givenArray, minAddress, midPoint - 1);
             }
 
             // Not in this part of the array, narrow down array bounds by 1/2 (increasing
             // the floor).
             else {
-                return binarySearch(givenAddress, givenArray, midPoint - 1, maxAddress, counter);
+                return binarySearch(targetString, givenArray, midPoint + 1, maxAddress);
             }
-        } else {
-            System.out.println("Item was not found. Took " + counter + " comparisons.");
-            return counter;
         }
+        return foundAddress;
 
     }
 

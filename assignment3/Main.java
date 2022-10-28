@@ -66,6 +66,19 @@ class Main {
         System.out.println("Linear Search Average: " + linearCounter / 42);
         System.out.println("Binary Search Average: " + binaryCounter / 42);
 
+        HashTable htable = new HashTable();
+
+        htable.storeHashFromString("test");
+        htable.storeHashFromString("items");
+        htable.storeHashFromString("items");
+        htable.storeHashFromString("items");
+        htable.storeHashFromString("poop");
+        htable.storeHashFromString("a");
+
+        for (LinkedList list : htable.arr) {
+            System.out.println(list);
+        }
+
     }
 
     // Performs a linearSearch for a target string over a given array. Returns index

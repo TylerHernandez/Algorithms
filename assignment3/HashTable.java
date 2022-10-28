@@ -21,8 +21,7 @@ public class HashTable {
     // Properly inserts string into hashCode address by implementing chaining.
     void storeStringWithChaining(int hashCode, String str){
 
-        Node n = new Node(str);
-
+        Node n = new Node(str); // Wrap string in a node to insert into LinkedList.
 
         // Store our new node in the linked list at hashCode address.
         if (arr[hashCode] == null){
@@ -42,7 +41,6 @@ public class HashTable {
 
         */
         
-        // hashCode address is not empty, retrieve 
     }
 
     // Creates a hashCode given a string.

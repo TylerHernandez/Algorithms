@@ -68,16 +68,18 @@ class Main {
 
         HashTable htable = new HashTable();
 
-        htable.storeHashFromString("test");
-        htable.storeHashFromString("items");
-        htable.storeHashFromString("items");
-        htable.storeHashFromString("items");
-        htable.storeHashFromString("poop");
-        htable.storeHashFromString("a");
+        // Append each magic item to our hashtable.
+        for (String item : ORIGINAL_TEXT) {
+            htable.storeHashFromString(item);
+        }
 
+        // Debug: print out our hashtable.
         for (LinkedList list : htable.arr) {
             System.out.println(list);
         }
+
+        // Retrieve our 42 items from hashtable.
+        
 
     }
 

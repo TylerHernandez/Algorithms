@@ -1,9 +1,11 @@
 import java.util.Random;
+import java.text.DecimalFormat;
 
 class Main {
 
     public static int linearCounter;
     public static int binaryCounter;
+    public static int hashingTotalComparisons;
 
     // Driver for Assignment 3.
     public static void main(String[] args) throws Exception {
@@ -73,13 +75,23 @@ class Main {
             htable.storeHashFromString(item);
         }
 
-        // Debug: print out our hashtable.
-        for (LinkedList list : htable.arr) {
-            System.out.println(list);
+        // Retrieve our 42 items from hashtable.
+        for (String item : randomAddresses) {
+            int currentHashCode = HashTable.makeHashCode(item);
+
+            // Plug currentHashCode into htable to find its row.
+            int currentComparisons = htable.arr[currentHashCode].findItem(item) + 1; // 1 for the hash.
+            hashingTotalComparisons += currentComparisons;
+
         }
 
-        // Retrieve our 42 items from hashtable.
-        
+        System.out.println("Hashing Retrieval Average: "
+                + new DecimalFormat("#.##").format((double) hashingTotalComparisons / 42));
+
+        // // Debug: print out our hashtable.
+        // for (LinkedList list : htable.arr) {
+        // System.out.println(list);
+        // }
 
     }
 

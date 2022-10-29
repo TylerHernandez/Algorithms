@@ -40,13 +40,39 @@ class LinkedList {
             return false;
     }
 
-    public Node findNode(Node n) {
-        // TODO: implement function.
-        return new Node();
-    }
-
     public Node getHead() {
         return this.head;
+    }
+
+    // Finds a given node in our linked list and returns how many comparisons taken. Returns -1 if not found.
+    public int findItem(String str){
+        int comparisons = 0;
+        boolean isFound = false;
+
+        Node n = head; // grab our pointer to the head of the list.
+        if (n == null){
+            return -1;
+        }
+
+        // From head to tail, search the list for our desired item.
+        while (n!= null){
+            comparisons++;
+            // If we find our desired node, flag isFound and break
+            if (n.getData().equals(str)){
+                isFound = true; 
+                break;
+            }
+
+            n = n.getNext();
+        }
+
+        if (isFound) {
+            return comparisons;
+        }
+        return -1;
+
+
+
     }
 
     public String toString() {

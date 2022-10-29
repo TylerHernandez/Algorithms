@@ -30,16 +30,6 @@ public class HashTable {
         } else {
             arr[hashCode].append(n);
         }
-
-        /*
-         Use a node class with a pointer to either the front or the end. When retrieving the chained items, 
-
-         # average is 3 or 4 ish 
-
-         # 1 for the hash, comparisons for the colissions 
-
-
-        */
         
     }
 

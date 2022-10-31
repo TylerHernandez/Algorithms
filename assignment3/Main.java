@@ -65,8 +65,8 @@ class Main {
             binarySearch(randomAddresses[i], fullText, 0, fullText.length);
         }
 
-        System.out.println("Linear Search Average: " + linearCounter / 42);
-        System.out.println("Binary Search Average: " + binaryCounter / 42);
+        System.out.println("Linear Search Average: " + new DecimalFormat("#.##").format((double) linearCounter / 42));
+        System.out.println("Binary Search Average: " + new DecimalFormat("#.##").format((double) binaryCounter / 42));
 
         HashTable htable = new HashTable();
 

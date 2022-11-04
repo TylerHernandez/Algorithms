@@ -1,0 +1,475 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% CMPT 435
+% Fall Semester
+% Assignment Two
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from: http://www.LaTeXTemplates.com
+% Original author: % Frits Wenneker (http://www.howtotex.com)
+% License: CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% Modified by Alan G. Labouseur  - alan@labouseur.com
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[letterpaper, 10pt,DIV=13]{scrartcl} 
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,xfrac} % Math packages
+\usepackage{sectsty} % Allows customizing section commands
+\usepackage{graphicx}
+\usepackage[lined,linesnumbered,commentsnumbered]{algorithm2e}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{lastpage}
+\usepackage{tabularx}
+
+\allsectionsfont{\normalfont\scshape} % Make all section titles in default font and small caps.
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{page \thepage\ of \pageref{LastPage}} % Page numbering for right footer
+
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+\setlength\parindent{0pt} % Removes all indentation from paragraphs.
+
+\binoppenalty=3000
+\relpenalty=3000
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+   \normalfont \normalsize 
+   \textsc{CMPT 435 - Fall 2022 - Dr. Labouseur} \\[10pt] % Header stuff.
+   \horrule{0.5pt} \\[0.25cm] 	% Top horizontal rule
+   \huge Assignment Three  \\     	    % Assignment title
+   \horrule{0.5pt} \\[0.25cm] 	% Bottom horizontal rule
+}
+
+\author{Tyler Hernandez \\ \normalsize Tyler.Hernandez1@marist.edu}
+
+\date{\normalsize\today} 	% Today's date.
+
+\begin{document}
+\maketitle % Print the title
+
+\ 
+\ 
+\ 
+\begin{center}
+    This page left blank intentionally.
+\end{center}
+
+\pagebreak
+
+%----------------------------------------------------------------------------------------
+%   start PROBLEM ONE
+%----------------------------------------------------------------------------------------
+\section{Main Method}
+
+\lstset{numbers=left, numberstyle=\tiny, stepnumber=1, numbersep=5pt, basicstyle=\footnotesize\ttfamily}
+\begin{lstlisting}[frame=single, ]  
+import java.util.Random;
+import java.text.DecimalFormat;
+
+class Main {
+
+    public static int linearCounter;
+    public static int binaryCounter;
+    public static int hashingTotalComparisons;
+
+    // Driver for Assignment 3.
+    public static void main(String[] args) throws Exception {
+        Reader reader = new Reader("./magicitems.txt");
+
+        // Characters we will ignore when reading from the file.
+        char[] ignoreList = {};
+
+        // Holds each char of a line
+        char[] line = reader.getNextLineOfChars(ignoreList, true);
+
+        // Holds each line as a string
+        String[] fullText = new String[0]; // Start at 0 length in case given an empty list.
+
+        // Until we've reached the end of the file, keep adding each line to our array.
+        // Even empty lines in the file will have at least a '\n' character.
+        while (line.length > 0) {
+            // Though, we must ignore '\n' characters manually in order to keep looping
+            // based on if there is a character in the next line.
+            if (line[line.length - 1] == '\n') {
+                // it seems that '\n' characters only show up at the end of the array (and 
+                // not in the last line).
+                line = Utils.removeLastElementOfArray(line);
+            }
+
+            // Expand array by one every time we add a new value to it.
+            fullText = Utils.expandArrayByOne(fullText);
+            // Takes line of characters and puts them into fullText as a concatted string.
+            fullText[fullText.length - 1] = String.valueOf(line);
+
+            // Grab the next line
+            line = reader.getNextLineOfChars(ignoreList, true);
+        } // ends while
+
+        // Unsorted Original Text.
+        String[] ORIGINAL_TEXT = fullText;
+
+        // Sort fullText.
+        fullText = insertionSort(fullText);
+
+        // Pick 42 random addresses in magicitems.txt
+        String[] randomAddresses = new String[42];
+        Random rand = new Random();
+        for (int i = 0; i < 42; i++) {
+            randomAddresses[i] = ORIGINAL_TEXT[rand.nextInt(0, ORIGINAL_TEXT.length)]
+            .toUpperCase();
+        }
+
+        // Linear search with our random addresses!
+        for (int i = 0; i < randomAddresses.length; i++) {
+            // Linear search for each address.
+            linearSearch(randomAddresses[i], fullText);
+        }
+
+        // Binary search with our random addresses!
+        for (int i = 0; i < randomAddresses.length; i++) {
+            // Binary search for each address.
+            binarySearch(randomAddresses[i], fullText, 0, fullText.length);
+        }
+
+        System.out.println("Linear Search Average: " + new DecimalFormat("#.##")
+        .format((double) linearCounter / 42));
+        System.out.println("Binary Search Average: " + new DecimalFormat("#.##")
+        .format((double) binaryCounter / 42));
+
+        HashTable htable = new HashTable();
+
+        // Append each magic item to our hashtable.
+        for (String item : ORIGINAL_TEXT) {
+            htable.storeHashFromString(item);
+        }
+
+        // Retrieve our 42 items from hashtable.
+        for (String item : randomAddresses) {
+            int currentHashCode = HashTable.makeHashCode(item);
+
+            // Plug currentHashCode into htable to find its row.
+            int currentComparisons = htable.arr[currentHashCode].findItem(item) + 1; 
+            // 1 for the hash.
+            hashingTotalComparisons += currentComparisons;
+
+        }
+
+        System.out.println("Hashing Retrieval Average: "
+                + new DecimalFormat("#.##").format((double) hashingTotalComparisons / 42));
+
+        // // Debug: print out our hashtable.
+        // for (LinkedList list : htable.arr) {
+        // System.out.println(list);
+        // }
+
+    }
+\end{lstlisting}
+
+\subsection{Main Method}
+
+The goal of this assignment is to count how many comparisons each form of searching takes. Ultimately, we can see that hashing is the superior method of retrieval, followed by binary search and linear search. Below are the outputs for one run of this assignment.
+
+\begin{center}
+\begin{tabularx}{0.8\textwidth} { 
+  | >{\raggedright\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\raggedleft\arraybackslash}X | }
+ \hline
+ Linear Search & 347.31 comparisons  \\
+ \hline
+ Binary Search & 9.26 comparisons \\
+\hline
+ Hashing Retrieval & 3.19 comparisons \\
+\hline
+\end{tabularx}
+\end{center}
+
+
+Inside of this main method, we call linear search for 42 random items, binary search on these same 42 items, and implement hashing on these 42 items and count their comparisons taken to estimate the time complexity of these storing and retrieving conventions.
+
+\newpage
+
+\subsection{Linear Search}
+\begin{lstlisting}[frame=single, ] 
+    // Performs a linearSearch for a target string over a given array. Returns index
+    // in array of where target is found.
+    public static int linearSearch(String targetString, String[] givenArray) {
+        int foundAddress = -1; // Initializes at -1 in case not found.
+
+        for (int i = 0; i < givenArray.length; i++) {
+            linearCounter++;
+
+            if (givenArray[i].equals(targetString)) {
+                foundAddress = i;
+                break;
+            }
+        }
+        return foundAddress;
+    }
+\end{lstlisting}
+Linear search gave me 347.31 comparisons on average for 42 numbers. This makes sense because the algorithm is O(n), however the expected time is N/2. With 666 items in our list of magic items, 333 is our expected time. This is because we can expect to find half of our numbers before we reach the halfway mark going from start to end. 
+\newpage
+
+\subsection{Binary Search}
+\begin{lstlisting}[frame=single, ]  
+    // Performs a binary search for a target string over a given Array, considering
+    // min and max bounds for our recursive calls to focus on. Returns index of
+    // where targetString exists in array or -1 if not found.
+    public static int binarySearch(String targetString, String[] givenArray,
+     int minAddress, int maxAddress) {
+        int foundAddress = -1; // Initializes at -1 in case not found.
+        int midPoint = (int) ((minAddress + maxAddress) / 2);
+
+        // left and right pointer have not crossed.
+        if (minAddress <= maxAddress) {
+            binaryCounter++;
+
+            // Item found, end recursive calls.
+            if (givenArray[midPoint].equals(targetString)) {
+                binaryCounter++;
+                foundAddress = midPoint;
+            }
+
+            // Not in this part of the array, narrow down array bounds by 1/2 (lowering the
+            // cieling).
+            else if (givenArray[midPoint].compareTo(targetString) > 0) {
+                return binarySearch(targetString, givenArray, minAddress, midPoint - 1);
+            }
+
+            // Not in this part of the array, narrow down array bounds by 1/2 (increasing
+            // the floor).
+            else {
+                return binarySearch(targetString, givenArray, midPoint + 1, maxAddress);
+            }
+        }
+        return foundAddress;
+
+    }
+\end{lstlisting}
+    
+Binary search gave me 9.26 comparisons for the same content as tested on linear search (Average for 42 random address searches). Because the algorithm is O(log2 (n)), this expected comparison count for this would be 9.38 for 666 items. The binary search algorithm is convenient as it allows us to throw out half of our list of numbers during every iteration, narrowing down our searching very quickly. The downside to this algorithm, however, is it must be sorted in order to be able to narrow down our search so efficiently. 
+
+\subsection{Insertion Sort}
+\begin{lstlisting}[frame=single, ] 
+  // Insertion Sort from previous assignment.
+    public static String[] insertionSort(String[] arr) {
+        for (int ptr1 = 1; ptr1 < arr.length; ptr1++) {
+            String key = arr[ptr1]; // record our character to copy over.
+            int ptr2 = ptr1 - 1;
+
+            // Moves over every character greater than our key by one.
+            while (ptr2 >= 0 && arr[ptr2].compareTo(key) >= 0) {
+                arr[ptr2 + 1] = arr[ptr2];
+                ptr2--;
+            }
+            arr[ptr2 + 1] = key; // paste over (insert) our recorded character.
+        }
+        return arr;
+    }
+\end{lstlisting}
+This was my implementation of Insertion Sort in the previous assignment. I used this to perform a binary search, because binary search will only work if the data is sorted. See assignment 2 for more information.
+\newpage
+
+
+\subsection{The Linked List}
+\begin{lstlisting}[frame=single, ] 
+class LinkedList {
+
+    private Node head;
+    private Node tail;
+    public int length;
+
+    public LinkedList() {
+        head = null;
+        tail = head;
+        length = 0;
+    }
+
+    // Appends given node to tail.
+    public void append(Node node) {
+        // First append will have a null head and tail.
+        if ((tail == null) && (head == null)) {
+            head = node;
+            tail = head;
+        } else {
+            tail.setNext(node);
+            tail = node;
+        }
+        length++;
+    }
+
+    // Removes head from linked list.
+    public Node removeHead() {
+        // Holds head to be dequeued.
+        Node temp = head;
+        // Sets the new head to be the upcoming first element.
+        head = head.getNext();
+        length--;
+        return temp;
+    }
+
+    public boolean isEmpty() {
+        if (length == 0)
+            return true;
+        else
+            return false;
+    }
+
+    public Node getHead() {
+        return this.head;
+    }
+
+    // Finds a given node in our linked list and returns how many comparisons taken. 
+    // Returns -1 if not found.
+    public int findItem(String str){
+        int comparisons = 0;
+        boolean isFound = false;
+
+        Node n = head; // grab our pointer to the head of the list.
+        if (n == null){
+            return -1;
+        }
+
+        // From head to tail, search the list for our desired item.
+        while (n!= null){
+            comparisons++;
+            // If we find our desired node, flag isFound and break
+            if (n.getData().equals(str)){
+                isFound = true; 
+                break;
+            }
+
+            n = n.getNext();
+        }
+
+        if (isFound) {
+            return comparisons;
+        }
+        return -1;
+
+
+
+    }
+
+    public String toString() {
+        String str = "Head- ";
+
+        // Retrieves head to loop through LinkedList without modifying it.
+        Node tempNode = head;
+        while (tempNode != null) {
+            str += (tempNode + ", ");
+            tempNode = tempNode.getNext();
+        }
+        return str + "- Tail";
+    }
+}
+\end{lstlisting}
+
+In order to have pointers to the head and tail of my linked list, I've decided to create a linked list class. This was derived off of my queue from a prior assignment, however a critical function I made is the findItem(str). This function finds a specific node in our linked list through grabbing the head and traversing it. For this assignment, we wanted to see how many comparisons were taken, therefore the function either returns -1 if the item is not found, or the amount of comparisons taken when it is found. 
+
+\newpage
+
+\subsection{The Hash Table}
+\begin{lstlisting}[frame=single, ] 
+  public class HashTable {
+
+    // Hash Table uses chaining.
+
+    LinkedList arr[];
+    private static final int ROWS = 250;
+
+    HashTable(){
+        arr = new LinkedList[ROWS]; // Creates a new array with rows length.
+    }
+
+    // Takes in a string, creates a hash for it, then stores it in our array.
+    void storeHashFromString(String str) {
+        int hashCode = makeHashCode(str);
+
+        // Use hashCode address in arr to store our given str.
+        // arr[hashCode] = str;
+        storeStringWithChaining(hashCode, str);;
+    }
+
+    // Properly inserts string into hashCode address by implementing chaining.
+    void storeStringWithChaining(int hashCode, String str){
+
+        Node n = new Node(str); // Wrap string in a node to insert into LinkedList.
+
+        // Store our new node in the linked list at hashCode address.
+        if (arr[hashCode] == null){
+            arr[hashCode] = new LinkedList();
+            arr[hashCode].append(n);
+        } else {
+            arr[hashCode].append(n);
+        }
+        
+    }
+
+    // Creates a hashCode given a string.
+    public static int makeHashCode(String str) {
+        str = str.toUpperCase();
+        int length = str.length();
+        int letterTotal = 0;
+
+        // Iterate over all letters in the string, totalling their ASCII values.
+        for (int i = 0; i < length; i++) {
+            char thisLetter = str.charAt(i);
+            int thisValue = (int) thisLetter;
+            letterTotal = letterTotal + thisValue;
+
+            // Test: print the char and the hash.
+            /*
+             * System.out.print(" [");
+             * System.out.print(thisLetter);
+             * System.out.print(thisValue);
+             * System.out.print("] ");
+             * //
+             */
+        }
+
+        // Scale letterTotal to fit in ROWS.
+        int hashCode = (letterTotal * 3) % ROWS;
+
+        return hashCode;
+    }
+
+
+}
+\end{lstlisting}
+
+The HashTable class uses an array of linked lists for hashing. Instead of just having a two dimensional array, this linked list allows us to append to our array  with the append function. It does this in constant time, thanks to our pointer to both the head and the tail (we only really need one or the other, but this makes re-usability much more convenient). Inside of our hashtable class, we have a makeHashCode() which creates a hash code for a given string, then scales it down to fit into our array. Next, we have a storeStringWithChaining() which takes in a hashcode and a given string to append our new node (derived from our string) at a given hashcode address. Finally, we have a storeHashFromString() that calls the prior two functions to give us the desired use of our hashtable; creating a hash for our string, and storing the string at that hash location. Ultimately, hashing is a convenient way of storing and retrieving information in constant time.
+
+\end{document}

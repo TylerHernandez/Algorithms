@@ -9,19 +9,11 @@ public class Vertex {
     private ArrayList<Integer> neighbors;
     public boolean isProcessed = false;
 
-    // public Vertex() {
-    // data = "";
-    // }
-
     public Vertex(int id) {
         data = "";
         this.id = id;
         this.neighbors = new ArrayList<>();
     }
-
-    // public Vertex(String data) {
-    // this.data = data;
-    // }
 
     // Data.
     public void setData(String data) {
@@ -43,7 +35,10 @@ public class Vertex {
     }
 
     public void addNeighbor(int neighborId) {
-        // TODO: check if neighborId is already in this list.
+        // Do not add neighbors more than once.
+        if (this.neighbors.contains(neighborId)) {
+            return;
+        }
         this.neighbors.add(neighborId);
     }
 

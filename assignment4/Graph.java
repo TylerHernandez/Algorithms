@@ -10,7 +10,18 @@ public class Graph {
     }
 
     public Vertex findVertexById(int id) {
-        return vertices.get(id);
+
+        // Loop through vertices list to find a vertex with our desired id.
+        Vertex v;
+        for (int i = 0; i < vertices.size(); i++) {
+            v = vertices.get(i);
+            if (v.getId() == id) {
+                return v;
+            }
+        }
+
+        // Vertex does not exist.
+        return new Vertex(-1);
     }
 
     // Given an id, creates a vertex and adds it to the graph.
@@ -23,10 +34,10 @@ public class Graph {
     // Takes in two vertex id's and adds themselves to each others neighbor lists.
     public void addEdge(int vertex1, int vertex2) {
         // Add vertex2 to vertex 1's neighbor list.
-        vertices.get(vertex1).addNeighbor(vertex2);
+        this.findVertexById(vertex1).addNeighbor(vertex2);
 
         // Add vertex1 to vertex2's neighbor list.
-        vertices.get(vertex2).addNeighbor(vertex1);
+        this.findVertexById(vertex2).addNeighbor(vertex1);
     }
 
 }

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Vertex {
-    // This is pretty much a node class, with some extra stuff :)
 
     public String data;
 
@@ -16,13 +15,13 @@ public class Vertex {
     }
 
     // Data.
-    public void setData(String data) {
-        this.data = data;
-    }
+    // public void setData(String data) {
+    // this.data = data;
+    // }
 
-    public String getData() {
-        return this.data;
-    }
+    // public String getData() {
+    // return this.data;
+    // }
 
     // ID.
     public int getId() {

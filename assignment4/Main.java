@@ -19,19 +19,31 @@ public class Main {
         Reader reader = new Reader("./graphs1.txt");
 
         String line = reader.getNextLine();
+        String[] words;
 
-        Graph g;
-        Vertex v;
+        Graph g = new Graph();
 
         while (!reader.endOfFile) { // Until we've reached the end of the file.
 
-            // if (line == "new graph") {
-            // g = new Graph();
-            // }
 
-            // if (line == "add")
-            System.out.println(line);
+        System.out.println(line);
 
+            words = line.split(" ");
+            if (words[0].equals("--")){
+                // Do nothing. This is a comment.
+            }
+            else if (words.length == 2){
+                // NEW GRAPH
+                g = new Graph();
+            } else if (words.length == 3){
+                // ADD VERTEX (INT)
+                g.addVertex(Integer.parseInt(words[2])); 
+            } else if (words.length == 5){
+                // ADD EDGE (INT) - (INT)
+                g.addEdge(Integer.parseInt(words[2]), Integer.parseInt(words[4]));
+            }
+
+            line = reader.getNextLine();
         }
 
     }

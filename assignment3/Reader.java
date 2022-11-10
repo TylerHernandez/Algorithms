@@ -1,112 +1,112 @@
-/*
- * Referenced the following link: https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
- */
+// /*
+//  * Referenced the following link: https://www.geeksforgeeks.org/different-ways-reading-text-file-java/
+//  */
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.Exception;
+// import java.io.FileReader;
+// import java.io.IOException;
+// import java.lang.Exception;
 
-public class Reader {
+// public class Reader {
 
-    FileReader reader;
-    int index;
+//     FileReader reader;
+//     int index;
 
-    public Reader(String fileLocation, int num) throws Exception {
-        reader = new FileReader(Utils.DIRECTORY + fileLocation);
-    }
+//     public Reader(String fileLocation, int num) throws Exception {
+//         reader = new FileReader(Utils.DIRECTORY + fileLocation);
+//     }
 
-    public Reader(String fileLocation) throws Exception {
-        reader = new FileReader(fileLocation);
-    }
+//     public Reader(String fileLocation) throws Exception {
+//         reader = new FileReader(fileLocation);
+//     }
 
-    public void printAll() throws IOException {
-        int i;
-        while ((i = reader.read()) != -1) {
-            System.out.print((char) i);
-        }
-    }
+//     public void printAll() throws IOException {
+//         int i;
+//         while ((i = reader.read()) != -1) {
+//             System.out.print((char) i);
+//         }
+//     }
 
-    public int getNextChar() throws IOException {
-        return reader.read();
-    }
+//     public int getNextChar() throws IOException {
+//         return reader.read();
+//     }
 
-    public int[] getNextLine() throws IOException {
-        int[] line = new int[0];
+//     public int[] getNextLine() throws IOException {
+//         int[] line = new int[0];
 
-        int i = 0;
-        while ((char) i != '\n') {
+//         int i = 0;
+//         while ((char) i != '\n') {
 
-            i = getNextChar();
-            line = Utils.expandArrayByOne(line);
-            line[line.length - 1] = i;
+//             i = getNextChar();
+//             line = Utils.expandArrayByOne(line);
+//             line[line.length - 1] = i;
 
-            if (i == -1) {
-                break;
-            }
-        }
-        return line;
-    }
+//             if (i == -1) {
+//                 break;
+//             }
+//         }
+//         return line;
+//     }
 
-    // gets the next line, ignoring specific chars.
-    public int[] getNextLine(char[] ignoreList) throws IOException {
-        int[] line = new int[0];
+//     // gets the next line, ignoring specific chars.
+//     public int[] getNextLine(char[] ignoreList) throws IOException {
+//         int[] line = new int[0];
 
-        int i = 0;
-        while ((char) i != '\n') {
+//         int i = 0;
+//         while ((char) i != '\n') {
 
-            i = getNextChar();
+//             i = getNextChar();
 
-            // char is not in list, add it to the array.
-            if (!charInList((char) i, ignoreList)){
-                line = Utils.expandArrayByOne(line);
-                line[line.length - 1] = i;
-            }
+//             // char is not in list, add it to the array.
+//             if (!charInList((char) i, ignoreList)){
+//                 line = Utils.expandArrayByOne(line);
+//                 line[line.length - 1] = i;
+//             }
             
             
 
-            if (i == -1) {
-                break;
-            }
-        }
-        return line;
-    }
+//             if (i == -1) {
+//                 break;
+//             }
+//         }
+//         return line;
+//     }
 
-        // returns the next line of characters, ignoring specific chars and option for uppercase only
-        public char[] getNextLineOfChars(char[] ignoreList, boolean toUpperCase) throws IOException {
-            char[] line = new char[0];
+//         // returns the next line of characters, ignoring specific chars and option for uppercase only
+//         public char[] getNextLineOfChars(char[] ignoreList, boolean toUpperCase) throws IOException {
+//             char[] line = new char[0];
     
-            int i = getNextChar();
-            while ((i != -1)) {
+//             int i = getNextChar();
+//             while ((i != -1)) {
 
-                // end of line.
-                if((char)i == '\n'){
-                    line = Utils.expandArrayByOne(line);
-                    line[line.length - 1] = '\n';
-                    return line;
-                }
+//                 // end of line.
+//                 if((char)i == '\n'){
+//                     line = Utils.expandArrayByOne(line);
+//                     line[line.length - 1] = '\n';
+//                     return line;
+//                 }
                 
-                // char is not in list, add it to the array.
-                if (!charInList((char) i, ignoreList)){
-                    line = Utils.expandArrayByOne(line);
-                    if(toUpperCase) {
-                        line[line.length - 1] = Character.toUpperCase((char) i);
-                    } else {
-                        line[line.length - 1] = (char) i;
-                    }
-                }
-                i = getNextChar();
-            }// ends while
-            return line;
-        }
+//                 // char is not in list, add it to the array.
+//                 if (!charInList((char) i, ignoreList)){
+//                     line = Utils.expandArrayByOne(line);
+//                     if(toUpperCase) {
+//                         line[line.length - 1] = Character.toUpperCase((char) i);
+//                     } else {
+//                         line[line.length - 1] = (char) i;
+//                     }
+//                 }
+//                 i = getNextChar();
+//             }// ends while
+//             return line;
+//         }
 
-    // given a list and a char, return whether or not the char is in the list.
-    public boolean charInList(char ch, char[] list){
-        for (int i = 0; i<list.length; i++){
-            if (ch == list[i]){
-                return true;
-            }
-        }
-        return false;
-    }
+//     // given a list and a char, return whether or not the char is in the list.
+//     public boolean charInList(char ch, char[] list){
+//         for (int i = 0; i<list.length; i++){
+//             if (ch == list[i]){
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
 
-}
+// }

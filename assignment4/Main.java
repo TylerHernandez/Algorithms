@@ -56,6 +56,19 @@ public class Main {
 
         System.out.println("Graph 0- \n" + graphs.get(0));
 
+        printMatrix(graphs.get(0).createMatrix());
+
+
+
+    }
+
+    public static void printMatrix(int[][] matrix){
+        for (int i=0; i<matrix.length; i++){
+            for(int x=0; x<matrix[i].length; x++){
+                System.out.print(matrix[i][x]);
+            }
+            System.out.println();
+        }
     }
 
 }

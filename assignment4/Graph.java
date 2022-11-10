@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Graph {
 
     ArrayList<Vertex> vertices;
-    int[][] matrix;
     private boolean isEmpty;
+    private int highestIdFound;
 
     public Graph() {
         this.vertices = new ArrayList<>();
@@ -29,6 +29,11 @@ public class Graph {
     // Given an id, creates a vertex and adds it to the graph.
     public void addVertex(int id) {
         this.isEmpty = false;
+
+        if (id > this.highestIdFound){
+            this.highestIdFound = id;
+        }
+
         Vertex vertex = new Vertex(id);
 
         vertices.add(vertex);
@@ -41,6 +46,31 @@ public class Graph {
 
         // Add vertex1 to vertex2's neighbor list.
         this.findVertexById(vertex2).addNeighbor(vertex1);
+    }
+
+    // Looks at all vertices and edges inside this graph, and returns a matrix representation.
+    public int[][] createMatrix(){
+        // Retrieve the highest number vertexId found.
+
+        int[][] matrix = new int[this.highestIdFound + 1][this.highestIdFound + 1];
+        
+        // This helps display the coordinate location.
+        for (int i=0; i<matrix.length; i++){
+            matrix[0][i] = i;
+            matrix[i][0] = i;
+        }
+
+        // Grab each vertex associated with each other and set their coordinates to 1.
+        for (Vertex v : this.vertices){
+            int vertexId = v.getId();
+
+            for (int neighborId : v.getNeighbors()){
+                matrix[vertexId][neighborId] = 1;
+                matrix[neighborId][vertexId] = 1;
+            }
+        }
+
+        return matrix;
     }
 
     public boolean isEmpty(){

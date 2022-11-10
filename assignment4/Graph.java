@@ -4,9 +4,11 @@ public class Graph {
 
     ArrayList<Vertex> vertices;
     int[][] matrix;
+    private boolean isEmpty;
 
     public Graph() {
         this.vertices = new ArrayList<>();
+        this.isEmpty = true;
     }
 
     public Vertex findVertexById(int id) {
@@ -26,6 +28,7 @@ public class Graph {
 
     // Given an id, creates a vertex and adds it to the graph.
     public void addVertex(int id) {
+        this.isEmpty = false;
         Vertex vertex = new Vertex(id);
 
         vertices.add(vertex);
@@ -38,6 +41,20 @@ public class Graph {
 
         // Add vertex1 to vertex2's neighbor list.
         this.findVertexById(vertex2).addNeighbor(vertex1);
+    }
+
+    public boolean isEmpty(){
+        return this.isEmpty;
+    }
+
+    public String toString(){
+        String retStr = "";
+        for (Vertex v : vertices){
+            retStr += "   Vertex: " + v.id + "\n";
+            retStr += v.toString();
+            retStr += "\n\n";
+        }
+        return retStr;
     }
 
 }

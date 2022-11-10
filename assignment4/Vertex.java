@@ -42,7 +42,7 @@ public class Vertex {
     }
 
     public String toString() {
-        return "" + this.data;
+        return "      neighbors:" + this.neighbors;
     }
 
 }

@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 public class Main {
 
     // Driver for Assignment 4.
@@ -20,19 +20,27 @@ public class Main {
 
         String line = reader.getNextLine();
         String[] words;
+        ArrayList<Graph> graphs = new ArrayList<>();
 
         Graph g = new Graph();
 
         while (!reader.endOfFile) { // Until we've reached the end of the file.
 
+            System.out.println(line);
 
-        System.out.println(line);
+            line = line.replaceAll("\n", "");
 
             words = line.split(" ");
+
             if (words[0].equals("--")){
-                // Do nothing. This is a comment.
+                // Do nothing because this is a comment.
             }
             else if (words.length == 2){
+                // Save previous graph to our list, if it was not the default graph.
+                if (!g.isEmpty()){
+                    graphs.add(g);
+                }
+
                 // NEW GRAPH
                 g = new Graph();
             } else if (words.length == 3){
@@ -45,6 +53,8 @@ public class Main {
 
             line = reader.getNextLine();
         }
+
+        System.out.println("Graph 0- \n" + graphs.get(0));
 
     }
 

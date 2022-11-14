@@ -50,18 +50,11 @@ public class Graph {
 
     // Looks at all vertices and edges inside this graph, and returns a matrix representation.
     public int[][] createMatrix(){
-        // Retrieve the highest number vertexId found.
 
         int[][] matrix = new int[this.highestIdFound + 1][this.highestIdFound + 1];
-        
-        // This helps display the coordinate location.
-        for (int i=0; i<matrix.length; i++){
-            matrix[0][i] = i;
-            matrix[i][0] = i;
-        }
 
         // Grab each vertex associated with each other and set their coordinates to 1.
-        for (Vertex v : this.vertices){
+        for (Vertex v : this.vertices) {
             int vertexId = v.getId();
 
             for (int neighborId : v.getNeighbors()){

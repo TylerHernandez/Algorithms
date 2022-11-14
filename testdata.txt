@@ -1,0 +1,12 @@
+new graph
+add vertex 0
+add vertex 1
+add vertex 2
+add vertex 3
+add vertex 4
+add vertex 5
+add vertex 10
+add vertex 6
+add edge 4 - 5
+add edge 0 - 1
+add edge 10 - 6

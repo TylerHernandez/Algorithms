@@ -4,7 +4,7 @@ public class Main {
     // Driver for Assignment 4.
     public static void main(String[] args) throws Exception {
 
-        Reader reader = new Reader("./testdata.txt");
+        Reader reader = new Reader("./graphs1.txt");
 
         String line = reader.getNextLine();
         String[] words;
@@ -45,17 +45,25 @@ public class Main {
             line = reader.getNextLine();
         } // end of while.
 
-        // The final graph never reaches our 'save' in while loop.
+        // Since the final graph never reaches our 'save' in while loop.
         graphs.add(g);
 
 
-        // For each graph, display it's matrix!
+        // For each graph,
         for (Graph graph : graphs) {
+            //  display it's matrix!
             printMatrix(graph.createMatrix());
+            // display it's adjacency list!
+            graph.printList();
         }
+        
 
 
     }
+
+    // public static void printList(int[] list){
+
+    // }
 
     public static void printMatrix(int[][] matrix) {    
         // This helps display the coordinate location.

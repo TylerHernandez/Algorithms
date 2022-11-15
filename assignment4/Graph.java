@@ -66,6 +66,20 @@ public class Graph {
         return matrix;
     }
 
+    // Prints out adjacency list representation for each vertex in graph.
+    // Initially, I was going to return it similar to createMatrix, however this was
+    // a lot easier and more efficient as I do not have to loop once again for display.
+    public void printList() {
+
+        // Grab each vertex associated with each other and set their coordinates to 1.
+        for (Vertex v : this.vertices) {
+            int vertexId = v.getId();
+
+            System.out.println("[" + vertexId + "]" + " ->" + v.getNeighbors().toString());
+        }
+
+    }
+
     public boolean isEmpty(){
         return this.isEmpty;
     }

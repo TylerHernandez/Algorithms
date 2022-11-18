@@ -82,8 +82,18 @@ public class Main {
 
 
         }
-        
+        System.out.println("\n\n\n");
+
         // Create a binary search tree!
+
+        BinarySearchTree tree = new BinarySearchTree();
+
+        tree.insert(new TreeNode("b"));
+        tree.insert(new TreeNode("c"));
+        tree.insert(new TreeNode("d"));
+        tree.insert(new TreeNode("e"));
+        tree.insert(new TreeNode("a"));
+        tree.insert(new TreeNode("a1"));
 
     }
 

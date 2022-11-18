@@ -10,8 +10,5 @@ public class TreeNode {
         right = null;
     }
 
-    public void insert(TreeNode treeNode) {
-        if (treeNode.value )
-    }
 
 }

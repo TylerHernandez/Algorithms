@@ -51,19 +51,44 @@ public class Main {
 
         // For each graph,
         for (Graph graph : graphs) {
+            System.out.println("--------------------------------------------");
+            System.out.println("GRAPH: ");
+
             //  display it's matrix!
+            System.out.println("Matrix\n");
             printMatrix(graph.createMatrix());
+            System.out.println("--------------------------------------------");
+
             // display it's adjacency list!
+            System.out.println("Adjacency List\n");
             graph.printList();
+            System.out.println("--------------------------------------------");
+
+            // Depth First Search.
+            System.out.println("Depth First Search\n");
+            Graph.DFS(graph.vertices.get(0), graph); // Grab the first vertex held in our graph.
+            System.out.println("--------------------------------------------");
+
+            // Reset graph, since all of it's vertices have been processed.
+            for (Vertex vertex : graph.vertices){
+                vertex.isProcessed = false;
+            }
+
+            // Breadth First Search.
+            System.out.println("Breadth First Search\n");
+            Graph.BFS(graph.vertices.get(0), graph);
+            System.out.println("--------------------------------------------");
+            System.out.println("\n\n\n");
+
+
         }
         
-
+        // Create a binary search tree!
 
     }
 
-    // public static void printList(int[] list){
 
-    // }
+
 
     public static void printMatrix(int[][] matrix) {    
         // This helps display the coordinate location.

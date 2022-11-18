@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-
+import java.util.LinkedList;
+import java.util.Queue;
 public class Graph {
 
-    ArrayList<Vertex> vertices;
+    public ArrayList<Vertex> vertices;
     private boolean isEmpty;
     private int highestIdFound;
 
@@ -17,6 +18,22 @@ public class Graph {
         Vertex v;
         for (int i = 0; i < vertices.size(); i++) {
             v = vertices.get(i);
+            if (v.getId() == id) {
+                return v;
+            }
+        }
+
+        // Vertex does not exist.
+        return new Vertex(-1);
+    }
+
+    // Static version of previous function. Used for searching.
+    private static Vertex getVertexById(int id, Graph g) {
+
+        // Loop through vertices list to find a vertex with our desired id.
+        Vertex v;
+        for (int i = 0; i < g.vertices.size(); i++) {
+            v = g.vertices.get(i);
             if (v.getId() == id) {
                 return v;
             }
@@ -79,6 +96,51 @@ public class Graph {
         }
 
     }
+
+// In order to retrieve pointer to a vertex given an id, needed to create self as static 
+// function, as well as getVertexById.
+
+// Depth First Search / Traversal prints out the ID's in order they are processed.
+    public static void DFS(Vertex v, Graph g) {
+
+        if (!v.isProcessed){
+            System.out.println(v.id);
+            v.isProcessed = true;
+        }
+        for (int neighborId : v.getNeighbors()){
+            Vertex neighbor = getVertexById(neighborId, g); // Use neighborId to retrieve a pointer to vertex.
+            if (!neighbor.isProcessed){
+                DFS(neighbor, g);
+            }
+        }
+    }
+
+    // Breadth First Search / Traversal prints out the ID's in order they are processed.
+    public static void BFS(Vertex v, Graph g) {
+
+        Queue<Vertex> q = new LinkedList<>();
+
+        q.add(v);
+        v.isProcessed = true;
+
+        while (!q.isEmpty()){
+            Vertex currentVertex = q.remove();
+            System.out.println(currentVertex.getId());
+
+            for (int neighborId : currentVertex.getNeighbors()) {
+                //System.out.println("-" + neighborId + "-");
+                Vertex neighbor = getVertexById(neighborId, g); // Use neighborId to retrieve a pointer to vertex.
+                if (!neighbor.isProcessed){
+                    q.add(neighbor);
+                    neighbor.isProcessed = true;
+                }
+            }
+            //System.out.println("*" + q.toString() + "*");
+        }
+
+    }
+
+
 
     public boolean isEmpty(){
         return this.isEmpty;

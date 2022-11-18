@@ -4,7 +4,7 @@ public class Main {
     // Driver for Assignment 4.
     public static void main(String[] args) throws Exception {
 
-        Reader reader = new Reader("./testdata.txt");
+        Reader reader = new Reader("./graphs1.txt");
 
         String line = reader.getNextLine();
         String[] words;
@@ -79,9 +79,12 @@ public class Main {
             System.out.println("--------------------------------------------");
 
             // Reset graph, since all of it's vertices have been processed.
+            System.out.println();
             for (Vertex vertex : graph.vertices){
+                System.out.print(vertex.id);
                 vertex.isProcessed = false;
             }
+            System.out.println();
 
             // Breadth First Search.
             System.out.println("Breadth First Search\n");
@@ -114,7 +117,10 @@ public class Main {
             }
             magicItem = magicItem.replace("\n", "");
 
+            System.out.println("Insertion of " + magicItem + " ");
             tree.insert(new TreeNode(magicItem));
+            System.out.println();
+            System.out.println();
             magicItemsList.add(magicItem);
 
 

@@ -1,6 +1,6 @@
 public class BinarySearchTree {
 
-    public static int comparisons = 0;
+    public static int comparisons = 0; // will record amt of comparisons for lookup
 
     // Holds pointer to the root of the tree.
     TreeNode root;

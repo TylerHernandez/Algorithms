@@ -14,15 +14,6 @@ public class Vertex {
         this.neighbors = new ArrayList<>();
     }
 
-    // Data.
-    // public void setData(String data) {
-    // this.data = data;
-    // }
-
-    // public String getData() {
-    // return this.data;
-    // }
-
     // ID.
     public int getId() {
         return this.id;

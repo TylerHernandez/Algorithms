@@ -95,6 +95,8 @@ public class Main {
         tree.insert(new TreeNode("a"));
         tree.insert(new TreeNode("a1"));
 
+        tree.traverseInOrder(tree.root);
+
     }
 
 

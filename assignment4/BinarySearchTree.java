@@ -3,7 +3,7 @@ public class BinarySearchTree {
     // Holds pointer to the root of the tree.
     TreeNode root;
     public BinarySearchTree() {
-        this.root = null;
+        this.root = null; // initialize with null value.
     }
 
     // Checks if BinarySearchTree has a root node, calls real insert method.
@@ -36,5 +36,21 @@ public class BinarySearchTree {
         return currentRoot;
 
     }
+
+
+    // Recursively performs in-order traversal of tree(alphabetical).
+    public void traverseInOrder(TreeNode currentRoot){
+        if (currentRoot != null) {
+            // Declare left of current root as the new root to look at.
+            traverseInOrder(currentRoot.left); 
+            System.out.println(currentRoot.value);
+            // Declare right of current root as the new root to look at.
+            traverseInOrder(currentRoot.right);
+        }
+    }
+
+    // TODO: lookup.
+
+
 
 }

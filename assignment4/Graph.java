@@ -51,6 +51,12 @@ public class Graph {
             this.highestIdFound = id;
         }
 
+        if (findVertexById(id).id == id){ // if we can find it's id (as non negative 1)
+            System.out.println("The vertex ID " + id +" already exists.");
+            return;
+        }
+
+
         Vertex vertex = new Vertex(id);
 
         vertices.add(vertex);

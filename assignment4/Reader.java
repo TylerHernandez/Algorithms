@@ -39,12 +39,15 @@ public class Reader {
         while ((char) i != '\n') {
 
             i = getNextChar();
-            str += ((char) i);
 
             if (i == -1) {
                 endOfFile = true;
                 break;
             }
+            
+            str += ((char) i);
+
+            
         }
         return str;
     }

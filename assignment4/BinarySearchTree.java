@@ -1,5 +1,7 @@
 public class BinarySearchTree {
 
+    public static int comparisons = 0;
+
     // Holds pointer to the root of the tree.
     TreeNode root;
     public BinarySearchTree() {
@@ -39,7 +41,7 @@ public class BinarySearchTree {
 
 
     // Recursively performs in-order traversal of tree(alphabetical).
-    public void traverseInOrder(TreeNode currentRoot){
+    public void traverseInOrder(TreeNode currentRoot) {
         if (currentRoot != null) {
             // Declare left of current root as the new root to look at.
             traverseInOrder(currentRoot.left); 
@@ -49,8 +51,38 @@ public class BinarySearchTree {
         }
     }
 
-    // TODO: lookup.
+    // User's lookup function to return how many iterations of 
+    public int lookup(String desiredNodeValue) {
+        comparisons = 0;
+        System.out.print("[");
+        this.find(this.root, desiredNodeValue);
+        System.out.print("] ");
+        return comparisons;
+
+    }
 
 
+    // Actual searching function to find a desired tree node.
+    private TreeNode find(TreeNode currentRoot, String desiredNodeValue) {
+        comparisons++;
+        // We've either found our TreeNode, or it does not exist.
+        if ( currentRoot == null || currentRoot.value.equals(desiredNodeValue)){
+            return currentRoot;
+        }
+ 
+        // Desired tree node is greater than(to the right) of current root.
+        if ( currentRoot.value.compareTo(desiredNodeValue) < 0 ) {
+            System.out.print("R, ");
+            return find(currentRoot.right, desiredNodeValue);
+        }
+ 
+        // otherwise, desired tree node is less than(to the left) of current root.
+        else {
+            System.out.print("L, ");
+            return find(currentRoot.left, desiredNodeValue);
+        }
+
+
+  }
 
 }

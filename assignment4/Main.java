@@ -4,16 +4,22 @@ public class Main {
     // Driver for Assignment 4.
     public static void main(String[] args) throws Exception {
 
-        Reader reader = new Reader("./graphs1.txt");
+        Reader reader = new Reader("./testdata.txt");
 
         String line = reader.getNextLine();
         String[] words;
         ArrayList<Graph> graphs = new ArrayList<>();
 
         Graph g = new Graph(); // Initialize so our compiler will stop complaining.
+        
+        // Flag to make sure while loop runs one time after reader flags end of file
+        boolean readingLastLine = false; 
 
-        while (!reader.endOfFile) { // Until we've reached the end of the file.
+        while (!readingLastLine) { // Until we've reached the end of the file.
 
+            if (reader.endOfFile) {
+                readingLastLine = true; // We've reached end of file, we can stop looping.
+            }
             // System.out.println(line);
 
             // Take our next line of text and put each word into an array.
@@ -22,7 +28,10 @@ public class Main {
 
             // Now, we can determine which action to take strictly based on sentence length!
 
-            if (words[0].equals("--")) {
+            if (words.length == 0){
+                // Blank line.
+            }
+            else if (words[0].equals("--")) {
                 // Do nothing because this is a comment.
             }
             else if (words.length == 2) {
@@ -85,17 +94,53 @@ public class Main {
         System.out.println("\n\n\n");
 
         // Create a binary search tree!
-
         BinarySearchTree tree = new BinarySearchTree();
 
-        tree.insert(new TreeNode("b"));
-        tree.insert(new TreeNode("c"));
-        tree.insert(new TreeNode("d"));
-        tree.insert(new TreeNode("e"));
-        tree.insert(new TreeNode("a"));
-        tree.insert(new TreeNode("a1"));
+        // Read in our magicitems values.
+        reader = new Reader("./magicitems-find-in-bst.txt");
+        String magicItem = reader.getNextLine();
 
-        tree.traverseInOrder(tree.root);
+        // Reset flag.
+        readingLastLine = false; 
+
+        // Holds the magic items we will lookup in our tree.
+        ArrayList<String> magicItemsList = new ArrayList<>();    
+
+        // Populate our BST with magicItems!
+        while (!readingLastLine) {
+
+            if (reader.endOfFile) {
+                readingLastLine = true; // We've reached end of file, we can stop looping.
+            }
+            magicItem = magicItem.replace("\n", "");
+
+            tree.insert(new TreeNode(magicItem));
+            magicItemsList.add(magicItem);
+
+
+            magicItem = reader.getNextLine();
+
+        }
+
+        // in-order traversal for tree.
+        tree.traverseInOrder(tree.root); // Need to give recursive function a starting root.
+
+        int sum = 0;
+        // Get the count of comparisons made looking for 
+        for (String item : magicItemsList){
+            System.out.println();
+            int comparisons = tree.lookup(item);
+            sum += comparisons;
+            System.out.print(item + "-->comparison count: " + comparisons);
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        double average = (sum / magicItemsList.size());
+
+        System.out.println("Average for " + magicItemsList.size() + " items = " + average);
+
 
     }
 

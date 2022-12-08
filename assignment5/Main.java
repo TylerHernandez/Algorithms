@@ -44,9 +44,9 @@ public class Main {
             } else if (words.length == 3) {
                 // ADD VERTEX (INT) command
                 g.addVertex(Integer.parseInt(words[2]));
-            } else if (words.length == 5) {
-                // ADD EDGE (INT) - (INT) command
-                g.addEdge(Integer.parseInt(words[2]), Integer.parseInt(words[4]));
+            } else if (words.length == 6) {
+                // ADD EDGE (INT) - (INT) (WEIGHT)command
+                g.addEdge(Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5]));
             }
 
             // Grab the next line so we can keep going!

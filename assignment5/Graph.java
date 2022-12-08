@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
 public class Graph {
 
     public ArrayList<Vertex> vertices;
@@ -47,15 +48,14 @@ public class Graph {
     public void addVertex(int id) {
         this.isEmpty = false;
 
-        if (id > this.highestIdFound){
+        if (id > this.highestIdFound) {
             this.highestIdFound = id;
         }
 
-        if (findVertexById(id).id == id){ // if we can find it's id (as non negative 1)
-            System.out.println("The vertex ID " + id +" already exists.");
+        if (findVertexById(id).id == id) { // if we can find it's id (as non negative 1)
+            System.out.println("The vertex ID " + id + " already exists.");
             return;
         }
-
 
         Vertex vertex = new Vertex(id);
 
@@ -63,16 +63,17 @@ public class Graph {
     }
 
     // Takes in two vertex id's and adds themselves to each others neighbor lists.
-    public void addEdge(int vertex1, int vertex2) {
+    public void addEdge(int vertex1, int vertex2, int weight) {
         // Add vertex2 to vertex 1's neighbor list.
-        this.findVertexById(vertex1).addNeighbor(vertex2);
+        this.findVertexById(vertex1).addNeighbor(vertex2, weight);
 
         // Add vertex1 to vertex2's neighbor list.
-        this.findVertexById(vertex2).addNeighbor(vertex1);
+        this.findVertexById(vertex2).addNeighbor(vertex1, weight);
     }
 
-    // Looks at all vertices and edges inside this graph, and returns a matrix representation.
-    public int[][] createMatrix(){
+    // Looks at all vertices and edges inside this graph, and returns a matrix
+    // representation.
+    public int[][] createMatrix() {
 
         int[][] matrix = new int[this.highestIdFound + 1][this.highestIdFound + 1];
 
@@ -80,7 +81,7 @@ public class Graph {
         for (Vertex v : this.vertices) {
             int vertexId = v.getId();
 
-            for (int neighborId : v.getNeighbors()){
+            for (int neighborId : v.getNeighbors()) {
                 matrix[vertexId][neighborId] = 1;
                 matrix[neighborId][vertexId] = 1;
             }
@@ -91,7 +92,8 @@ public class Graph {
 
     // Prints out adjacency list representation for each vertex in graph.
     // Initially, I was going to return it similar to createMatrix, however this was
-    // a lot easier and more efficient as I do not have to loop once again for display.
+    // a lot easier and more efficient as I do not have to loop once again for
+    // display.
     public void printList() {
 
         // Grab each vertex associated with each other and set their coordinates to 1.
@@ -103,25 +105,28 @@ public class Graph {
 
     }
 
-// In order to retrieve pointer to a vertex given an id, needed to create self as static 
-// function, as well as getVertexById.
+    // In order to retrieve pointer to a vertex given an id, needed to create self
+    // as static
+    // function, as well as getVertexById.
 
-// Depth First Search / Traversal prints out the ID's in order they are processed.
+    // Depth First Search / Traversal prints out the ID's in order they are
+    // processed.
     public static void DFS(Vertex v, Graph g) {
 
-        if (!v.isProcessed){
+        if (!v.isProcessed) {
             System.out.println(v.id);
             v.isProcessed = true;
         }
-        for (int neighborId : v.getNeighbors()){
+        for (int neighborId : v.getNeighbors()) {
             Vertex neighbor = getVertexById(neighborId, g); // Use neighborId to retrieve a pointer to vertex.
-            if (!neighbor.isProcessed){
+            if (!neighbor.isProcessed) {
                 DFS(neighbor, g);
             }
         }
     }
 
-    // Breadth First Search / Traversal prints out the ID's in order they are processed.
+    // Breadth First Search / Traversal prints out the ID's in order they are
+    // processed.
     public static void BFS(Vertex v, Graph g) {
 
         Queue<Vertex> q = new LinkedList<>();
@@ -129,32 +134,30 @@ public class Graph {
         q.add(v);
         v.isProcessed = true;
 
-        while (!q.isEmpty()){
+        while (!q.isEmpty()) {
             Vertex currentVertex = q.remove();
             System.out.println(currentVertex.getId());
 
             for (int neighborId : currentVertex.getNeighbors()) {
-                //System.out.println("-" + neighborId + "-");
+                // System.out.println("-" + neighborId + "-");
                 Vertex neighbor = getVertexById(neighborId, g); // Use neighborId to retrieve a pointer to vertex.
-                if (!neighbor.isProcessed){
+                if (!neighbor.isProcessed) {
                     q.add(neighbor);
                     neighbor.isProcessed = true;
                 }
             }
-            //System.out.println("*" + q.toString() + "*");
+            // System.out.println("*" + q.toString() + "*");
         }
 
     }
 
-
-
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this.isEmpty;
     }
 
-    public String toString(){
+    public String toString() {
         String retStr = "";
-        for (Vertex v : vertices){
+        for (Vertex v : vertices) {
             retStr += "   Vertex: " + v.id + "\n";
             retStr += v.toString();
             retStr += "\n\n";

@@ -5,13 +5,13 @@ public class Vertex {
     public String data;
 
     public int id;
-    private ArrayList<Integer> neighbors;
+    private ArrayList<Link> links;
     public boolean isProcessed = false;
 
     public Vertex(int id) {
         data = "";
         this.id = id;
-        this.neighbors = new ArrayList<>();
+        this.links = new ArrayList<>();
     }
 
     // ID.
@@ -19,21 +19,17 @@ public class Vertex {
         return this.id;
     }
 
-    // Neighbors.
-    public ArrayList<Integer> getNeighbors() {
-        return this.neighbors;
+    // Links.
+    public ArrayList<Link> getLinks() {
+        return this.links;
     }
 
-    public void addNeighbor(int neighborId) {
-        // Do not add neighbors more than once.
-        if (this.neighbors.contains(neighborId)) {
-            return;
-        }
-        this.neighbors.add(neighborId);
+    public void addLink(int neighborId, int weight) {
+        this.links.add(new Link(weight, neighborId));
     }
 
     public String toString() {
-        return "      neighbors:" + this.neighbors;
+        return "      Links:" + this.links;
     }
 
 }

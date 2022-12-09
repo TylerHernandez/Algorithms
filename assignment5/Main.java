@@ -82,7 +82,7 @@ public class Main {
         // Part 2: Spice.txt
         ArrayList<Spice> spices = new ArrayList<>(); // will hold all spices.
         int quantity = 0;
-        fractionalKnapsack(spices, quantity);
+        Spice[] bag = fractionalKnapsack(spices, quantity);
 
     }
 
@@ -111,13 +111,12 @@ public class Main {
                 break;
             } else {
 
-                // Only append a spice if the quantity is more than 0.
-                if (spice.quantity > 0) {
+                // Keep appending this spice until it either runs out or we don't have anymore
+                // space.
+                while ((spice.quantity > 0) && (counter < quantity)) {
                     spice.quantity -= 1;
                     myBag[counter] = spice;
                     counter++;
-                } else {
-                    continue;
                 }
 
             }

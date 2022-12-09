@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
@@ -89,18 +87,43 @@ public class Main {
     }
 
     // Sort by the highest value per unit and take them in that order.
-    public static void fractionalKnapsack(ArrayList<Spice> spices, int quantity) {
+    public static Spice[] fractionalKnapsack(ArrayList<Spice> spices, int quantity) {
 
         // Comparator for comparing spices by unit price.
         Comparator<Spice> compareByUnitPrice = new Comparator<Spice>() {
             @Override
-            public int compare(Spice o1, Spice o2) {
-                return o1.compareTo(o2);
+            public int compare(Spice spice1, Spice spice2) {
+                return spice1.compareTo(spice2);
             }
         };
 
         // Sort spices by unit price.
         Collections.sort(spices, compareByUnitPrice);
+
+        // Initialize bag to be quantity length
+        Spice[] myBag = new Spice[quantity];
+        int counter = 0; // Counter to place spices in order of value and prevent out of bounds
+                         // exception.
+
+        // Loop through spices and grab the first 'quantity' many.
+        for (Spice spice : spices) {
+            if (counter == quantity) {
+                break;
+            } else {
+
+                // Only append a spice if the quantity is more than 0.
+                if (spice.quantity > 0) {
+                    spice.quantity -= 1;
+                    myBag[counter] = spice;
+                    counter++;
+                } else {
+                    continue;
+                }
+
+            }
+        }
+
+        return myBag;
 
     }
 

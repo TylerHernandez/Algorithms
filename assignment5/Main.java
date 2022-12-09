@@ -110,8 +110,8 @@ public class Main {
             }
         }
 
-        // Lastly, we need to ensure a negative weight cycle is not found or else the
-        // above code will infinitely loop.
+        // Lastly, we need to ensure a negative weight cycle is not found or else we
+        // will infinitely find "shorter" paths every time.
         for (int j = 0; j < lengthOfLinksList; ++j) {
             int u = graph.links.get(j).sourceId - 1;
             int v = graph.links.get(j).destinationId - 1;
@@ -119,7 +119,7 @@ public class Main {
             if (dist[u] != Integer.MAX_VALUE
                     && dist[u] + weight < dist[v]) {
                 System.out.println(
-                        "Graph contains negative weight cycle");
+                        "Error: Graph contains negative weight cycle");
                 return dist;
             }
         }

@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -76,6 +80,27 @@ public class Main {
 
         }
         System.out.println("\n\n\n");
+
+        // Part 2: Spice.txt
+        ArrayList<Spice> spices = new ArrayList<>(); // will hold all spices.
+        int quantity = 0;
+        fractionalKnapsack(spices, quantity);
+
+    }
+
+    // Sort by the highest value per unit and take them in that order.
+    public static void fractionalKnapsack(ArrayList<Spice> spices, int quantity) {
+
+        // Comparator for comparing spices by unit price.
+        Comparator<Spice> compareByUnitPrice = new Comparator<Spice>() {
+            @Override
+            public int compare(Spice o1, Spice o2) {
+                return o1.compareTo(o2);
+            }
+        };
+
+        // Sort spices by unit price.
+        Collections.sort(spices, compareByUnitPrice);
 
     }
 

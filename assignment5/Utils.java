@@ -36,14 +36,14 @@ public class Utils {
             System.out.println("[ ]");
             System.out.println();
         } else {
-        System.out.print("[ ");
-        for (int i = 0; i < array.length - 1; i++) {
-            System.out.print( array[i] + ", ");
+            System.out.print("[ ");
+            for (int i = 0; i < array.length - 1; i++) {
+                System.out.print(array[i] + ", ");
+            }
+            System.out.print(array[array.length - 1]);
+            System.out.println("]");
+            System.out.println();
         }
-        System.out.print(array[array.length - 1]);
-        System.out.println("]");
-        System.out.println();
-    }
     }
 
     public static void printArray(char[] array) {

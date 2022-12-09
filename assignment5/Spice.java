@@ -10,7 +10,7 @@ public class Spice implements Comparable<Spice> {
         // Parse our strings into proper data types.
         this.name = name;
         this.price = Double.parseDouble(price);
-        this.quantity = Double.parseDouble(price);
+        this.quantity = Double.parseDouble(quantity);
         this.unitPrice = this.price / this.quantity;
     }
 
@@ -23,6 +23,10 @@ public class Spice implements Comparable<Spice> {
         } else {
             return -1;
         }
+    }
+
+    public String toString() {
+        return this.name + ": $" + this.unitPrice;
     }
 
 }

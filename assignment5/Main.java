@@ -81,7 +81,7 @@ public class Main {
 
         // Part 2: Spice.txt
         ArrayList<Spice> spices = new ArrayList<>(); // will hold all spices.
-        ArrayList<String> commands = new ArrayList<>();
+        ArrayList<Integer> commands = new ArrayList<>();
 
         // First, read in all spices into spices arraylist and gather all 'knapsack
         // capacity' commands.
@@ -102,26 +102,39 @@ public class Main {
             line = line.replaceAll("  ", " "); // ... and this ones for good luck.
             words = line.split(" ");
 
-            Utils.printArray(words);
-
             if (words.length == 0) {
                 // Blank line.
             } else if (words[0].equals("--")) {
                 // Do nothing because this is a comment.
             } else if (words.length == 4) {
+                // Declaring commands here.
                 // Knapsack capacity = (int) command.
+                commands.add(Integer.parseInt(words[3]));
             } else if (words.length == 10) {
                 // Declaring spices here.
-                // 4 : (name), 7 : (price), 10 : (quantity).
-                Spice s = new Spice(words[4], words[7], words[10]);
+                // 3 : (name), 6 : (price), 9 : (quantity).
+                spices.add(new Spice(words[3], words[6], words[9]));
             }
 
             line = reader.getNextLine();
         }
 
-        int quantity = 0;
-        // Spice[] bag = fractionalKnapsack(spices, quantity);
+        // For each command (quantity), run our fractionalKnapsack algorithm.
+        for (int command : commands) {
+            Spice[] bag = fractionalKnapsack(spices, command);
+            printSpices(bag);
+        }
 
+    }
+
+    public static void printSpices(Spice[] spices) {
+        System.out.println();
+        System.out.print("[");
+        for (Spice spice : spices) {
+            System.out.print(spice + ", ");
+        }
+        System.out.println("]");
+        System.out.println();
     }
 
     // Sort by the highest value per unit and take them in that order.
@@ -131,7 +144,7 @@ public class Main {
         Comparator<Spice> compareByUnitPrice = new Comparator<Spice>() {
             @Override
             public int compare(Spice spice1, Spice spice2) {
-                return spice1.compareTo(spice2);
+                return spice2.compareTo(spice1);
             }
         };
 
@@ -151,8 +164,10 @@ public class Main {
 
                 // Keep appending this spice until it either runs out or we don't have anymore
                 // space.
-                while ((spice.quantity > 0) && (counter < quantity)) {
-                    spice.quantity -= 1;
+                double spiceQuantity = spice.quantity;
+                while ((spiceQuantity > 0) && (counter < quantity)) {
+
+                    spiceQuantity -= 1;
                     myBag[counter] = spice;
                     counter++;
                 }

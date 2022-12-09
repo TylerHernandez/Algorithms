@@ -10,7 +10,7 @@ public class Link {
     }
 
     public String toString() {
-        return ("--" + this.weight + "-->" + this.neighborId);
+        return ("--(" + this.weight + ")-->" + this.neighborId);
     }
 
 }

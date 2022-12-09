@@ -26,6 +26,7 @@ public class Main {
 
             // Take our next line of text and put each word into an array.
             line = line.replaceAll("\n", "");
+            line = line.replaceAll("  ", " "); // Nice try, professor.
             words = line.split(" ");
 
             // Now, we can determine which action to take strictly based on sentence length!
@@ -46,7 +47,7 @@ public class Main {
                 // ADD VERTEX (INT) command
                 g.addVertex(Integer.parseInt(words[2]));
             } else if (words.length == 6) {
-                // ADD EDGE (INT) - (INT) (WEIGHT)command
+                // ADD EDGE (INT) - (INT) (WEIGHT) command
                 g.addEdge(Integer.parseInt(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[5]));
             }
 
@@ -61,11 +62,6 @@ public class Main {
         for (Graph graph : graphs) {
             System.out.println("--------------------------------------------");
             System.out.println("GRAPH: ");
-
-            // display it's matrix!
-            System.out.println("Matrix\n");
-            // printMatrix(graph.createMatrix());
-            System.out.println("--------------------------------------------");
 
             // display it's adjacency list!
             System.out.println("Adjacency List\n");

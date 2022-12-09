@@ -4,8 +4,9 @@ public class Main {
 
     // Driver for Assignment 5.
     public static void main(String[] args) throws Exception {
+        System.out.println("Start");
 
-        Reader reader = new Reader("./graphs1.txt");
+        Reader reader = new Reader("./graphs2.txt");
 
         String line = reader.getNextLine();
         String[] words;
@@ -63,32 +64,13 @@ public class Main {
 
             // display it's matrix!
             System.out.println("Matrix\n");
-            printMatrix(graph.createMatrix());
+            // printMatrix(graph.createMatrix());
             System.out.println("--------------------------------------------");
 
             // display it's adjacency list!
             System.out.println("Adjacency List\n");
             graph.printList();
             System.out.println("--------------------------------------------");
-
-            // Depth First Search.
-            System.out.println("Depth First Search\n");
-            Graph.DFS(graph.vertices.get(0), graph); // Grab the first vertex held in our graph.
-            System.out.println("--------------------------------------------");
-
-            // Reset graph, since all of it's vertices have been processed.
-            System.out.println();
-            for (Vertex vertex : graph.vertices) {
-                System.out.print(vertex.id);
-                vertex.isProcessed = false;
-            }
-            System.out.println();
-
-            // Breadth First Search.
-            System.out.println("Breadth First Search\n");
-            Graph.BFS(graph.vertices.get(0), graph);
-            System.out.println("--------------------------------------------");
-            System.out.println("\n\n\n");
 
         }
         System.out.println("\n\n\n");

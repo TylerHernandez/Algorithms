@@ -81,8 +81,46 @@ public class Main {
 
         // Part 2: Spice.txt
         ArrayList<Spice> spices = new ArrayList<>(); // will hold all spices.
+        ArrayList<String> commands = new ArrayList<>();
+
+        // First, read in all spices into spices arraylist and gather all 'knapsack
+        // capacity' commands.
+        reader = new Reader("./spice.txt");
+        line = reader.getNextLine();
+        readingLastLine = false; // reset flag from previous use.
+        while (!readingLastLine) { // Until we've reached the end of the file.
+
+            if (reader.endOfFile) {
+                readingLastLine = true; // We've reached end of file, we can stop looping.
+            }
+
+            line = line.replaceAll("\n", "");
+            line = line.replaceAll(";", ""); // gets rid of those semicolons.
+            line = line.replaceAll("  ", " "); // There's a lot of double
+            line = line.replaceAll("  ", " "); // spaces we need to get
+            line = line.replaceAll("  ", " "); // rid of :)
+            line = line.replaceAll("  ", " "); // ... and this ones for good luck.
+            words = line.split(" ");
+
+            Utils.printArray(words);
+
+            if (words.length == 0) {
+                // Blank line.
+            } else if (words[0].equals("--")) {
+                // Do nothing because this is a comment.
+            } else if (words.length == 4) {
+                // Knapsack capacity = (int) command.
+            } else if (words.length == 10) {
+                // Declaring spices here.
+                // 4 : (name), 7 : (price), 10 : (quantity).
+                Spice s = new Spice(words[4], words[7], words[10]);
+            }
+
+            line = reader.getNextLine();
+        }
+
         int quantity = 0;
-        Spice[] bag = fractionalKnapsack(spices, quantity);
+        // Spice[] bag = fractionalKnapsack(spices, quantity);
 
     }
 

@@ -5,11 +5,13 @@ public class Spice implements Comparable<Spice> {
     public double quantity;
     public double unitPrice;
 
-    public Spice(String name, double price, double quantity) {
+    public Spice(String name, String price, String quantity) {
+
+        // Parse our strings into proper data types.
         this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.unitPrice = price / quantity;
+        this.price = Double.parseDouble(price);
+        this.quantity = Double.parseDouble(price);
+        this.unitPrice = this.price / this.quantity;
     }
 
     @Override

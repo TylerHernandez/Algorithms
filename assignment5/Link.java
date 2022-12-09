@@ -1,16 +1,18 @@
 // Wrapper for weight + neighbor link.
 public class Link {
 
+    public int sourceId;
     public int weight;
-    public int neighborId;
+    public int destinationId;
 
-    public Link(int weight, int neighborId) {
+    public Link(int sourceId, int weight, int destinationId) {
+        this.sourceId = sourceId;
         this.weight = weight;
-        this.neighborId = neighborId;
+        this.destinationId = destinationId;
     }
 
     public String toString() {
-        return ("--(" + this.weight + ")-->" + this.neighborId);
+        return ("--(" + this.weight + ")-->" + this.destinationId);
     }
 
 }

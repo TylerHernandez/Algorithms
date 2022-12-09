@@ -4,7 +4,6 @@ public class Main {
 
     // Driver for Assignment 5.
     public static void main(String[] args) throws Exception {
-        System.out.println("Start");
 
         Reader reader = new Reader("./graphs2.txt");
 
@@ -67,10 +66,64 @@ public class Main {
             System.out.println("Adjacency List\n");
             graph.printList();
             System.out.println("--------------------------------------------");
+            int[] distances = SSSP(graph, 1);
+
+            for (int i = 0; i < distances.length; i++) {
+                System.out.println("1 -> " + (i + 1) + " cost is " + distances[i]);
+            }
+
+            System.out.println("\n");
 
         }
         System.out.println("\n\n\n");
 
+    }
+
+    // This is not my algorithm, I am using it for this assignment's purpose and
+    // have modified it for my better understanding and to match my data set.
+    // Here is the original source:
+    // https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
+    public static int[] SSSP(Graph graph, int src) {
+        // Grab the length of our vertices and links to know how many options we have at
+        // a given moment.
+        int lengthOfVerticesList = graph.vertices.size();
+        int lengthOfLinksList = graph.links.size();
+        int dist[] = new int[lengthOfVerticesList];
+
+        // First, set the distance from source to every other vertices as
+        // Integer.MAX_VALUE so we don't blindly choose an unexplored path.
+        for (int i = 0; i < lengthOfVerticesList; ++i) {
+            dist[i] = Integer.MAX_VALUE;
+        }
+
+        dist[src - 1] = 0;
+
+        // Next, check each edge's weight to find the single shortest path.
+        for (int i = 1; i < lengthOfVerticesList; ++i) {
+            for (int j = 0; j < lengthOfLinksList; ++j) {
+                int u = graph.links.get(j).sourceId - 1;
+                int v = graph.links.get(j).destinationId - 1;
+                int weight = graph.links.get(j).weight;
+                if (dist[u] != Integer.MAX_VALUE
+                        && dist[u] + weight < dist[v])
+                    dist[v] = dist[u] + weight;
+            }
+        }
+
+        // Lastly, we need to ensure a negative weight cycle is not found or else the
+        // above code will infinitely loop.
+        for (int j = 0; j < lengthOfLinksList; ++j) {
+            int u = graph.links.get(j).sourceId - 1;
+            int v = graph.links.get(j).destinationId - 1;
+            int weight = graph.links.get(j).weight;
+            if (dist[u] != Integer.MAX_VALUE
+                    && dist[u] + weight < dist[v]) {
+                System.out.println(
+                        "Graph contains negative weight cycle");
+                return dist;
+            }
+        }
+        return dist;
     }
 
     public static void printMatrix(int[][] matrix) {

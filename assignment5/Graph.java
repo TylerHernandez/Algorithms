@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class Graph {
 
     public ArrayList<Vertex> vertices;
+    public ArrayList<Link> links;
     private boolean isEmpty;
     private int highestIdFound;
 
     public Graph() {
         this.vertices = new ArrayList<>();
+        this.links = new ArrayList<>();
         this.isEmpty = true;
     }
 
@@ -47,28 +49,9 @@ public class Graph {
     // Takes in two vertex id's and adds themselves to each others neighbor lists.
     public void addEdge(int vertex1, int vertex2, int weight) {
         // Create a link from vertex 1 to vertex 2.
-        this.findVertexById(vertex1).addLink(vertex2, weight);
+        Link link = this.findVertexById(vertex1).addLink(vertex2, weight);
+        this.links.add(link);
     }
-
-    // Looks at all vertices and edges inside this graph, and returns a matrix
-    // representation.
-    // public int[][] createMatrix() {
-
-    // int[][] matrix = new int[this.highestIdFound + 1][this.highestIdFound + 1];
-
-    // // Grab each vertex associated with each other and set their coordinates to
-    // 1.
-    // for (Vertex v : this.vertices) {
-    // int vertexId = v.getId();
-
-    // for (int neighborId : v.getNeighbors()) {
-    // matrix[vertexId][neighborId] = 1;
-    // matrix[neighborId][vertexId] = 1;
-    // }
-    // }
-
-    // return matrix;
-    // }
 
     // Prints out adjacency list representation for each vertex in graph.
     // Initially, I was going to return it similar to createMatrix, however this was

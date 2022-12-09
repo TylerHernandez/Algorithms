@@ -24,8 +24,11 @@ public class Vertex {
         return this.links;
     }
 
-    public void addLink(int neighborId, int weight) {
-        this.links.add(new Link(weight, neighborId));
+    // Adds link to list of links in vertex, then returns it for graph's list.
+    public Link addLink(int neighborId, int weight) {
+        Link link = new Link(this.id, weight, neighborId);
+        this.links.add(link);
+        return link;
     }
 
     public String toString() {

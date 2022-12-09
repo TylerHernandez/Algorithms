@@ -192,15 +192,15 @@ public class Main {
 
         // First, set the distance from source to every other vertices as
         // Integer.MAX_VALUE so we don't blindly choose an unexplored path.
-        for (int i = 0; i < lengthOfVerticesList; ++i) {
+        for (int i = 0; i < lengthOfVerticesList; i++) {
             dist[i] = Integer.MAX_VALUE;
         }
 
         dist[src - 1] = 0;
 
         // Next, check each edge's weight to find the single shortest path.
-        for (int i = 1; i < lengthOfVerticesList; ++i) {
-            for (int j = 0; j < lengthOfLinksList; ++j) {
+        for (int i = 1; i < lengthOfVerticesList; i++) {
+            for (int j = 0; j < lengthOfLinksList; j++) {
                 int u = graph.links.get(j).sourceId - 1;
                 int v = graph.links.get(j).destinationId - 1;
                 int weight = graph.links.get(j).weight;
@@ -212,7 +212,7 @@ public class Main {
 
         // Lastly, we need to ensure a negative weight cycle is not found or else we
         // will infinitely find "shorter" paths every time.
-        for (int j = 0; j < lengthOfLinksList; ++j) {
+        for (int j = 0; j < lengthOfLinksList; j++) {
             int u = graph.links.get(j).sourceId - 1;
             int v = graph.links.get(j).destinationId - 1;
             int weight = graph.links.get(j).weight;

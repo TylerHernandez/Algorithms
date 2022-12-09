@@ -1,4 +1,4 @@
-// Wrapper for weight + neighbor link.
+// Wrapper for sourceId, weight, and destination link.
 public class Link {
 
     public int sourceId;

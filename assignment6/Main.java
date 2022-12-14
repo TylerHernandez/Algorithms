@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Main {
 
@@ -36,13 +37,13 @@ public class Main {
 
             // Take our line of text and put each word into an array.
             words = line.split(" ");
-            Utils.printArray(words);
+            // Utils.printArray(words);
 
             if (words.length == 0) {
                 // Blank line.
             } else if (words[0].equals("--")) {
                 // Do nothing because this is a comment.
-            } else if (words[0].equals("CONFIG:")) {
+            } else if (words[0].equals("CONFIG")) {
                 // words[1] = number of residents, words[2] = number of hospitals.
             } else if (words[0].contains("R")) {
                 // resident insertion.
@@ -83,6 +84,50 @@ public class Main {
 
         printAllResidents(clients);
         printAllHospitals(hospitals);
+
+        System.out.println("\n\n");
+
+        // Give preference to clients who do not have a lot of options.
+        // Order clients by their preference sizes.
+        Comparator<Resident> residentWithLeastPreferences = new Comparator<Resident>() {
+            @Override
+            public int compare(Resident r1, Resident r2) {
+                return r2.compareTo(r1);
+            }
+        };
+
+        // Give preference to hospitals with the most space.
+        Comparator<Hospital> hospitalWithMostSpace = new Comparator<Hospital>() {
+            @Override
+            public int compare(Hospital h1, Hospital h2) {
+                return h2.compareTo(h1);
+            }
+        };
+
+        // Fill in clients needs with hospitals that have the most space.
+        clients.sort(residentWithLeastPreferences);
+        hospitals.sort(hospitalWithMostSpace);
+
+        // Now, start matching our clients
+        while (clients.size() > 0) {
+
+            Resident currentClient = clients.remove(0);
+
+            // Look to match this client.
+            for (String preference : currentClient.preferences) {
+
+            }
+
+            // After each match, check our hospital slots to see where we can fit people.
+
+            clients.sort(residentWithLeastPreferences);
+            hospitals.sort(hospitalWithMostSpace);
+
+            // if matched hospital is full, look through all clients and remove this
+            // preference from their list.
+            System.out.println("\n\n");
+            printAllHospitals(hospitals);
+        }
 
         System.out.println("\n\n");
     }

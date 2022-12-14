@@ -23,4 +23,14 @@ public class Hospital {
         return str;
     }
 
+    public int compareTo(Hospital hospital) {
+        if (this.residents.size() > hospital.residents.size()) {
+            return 1;
+        } else if (this.residents.size() == hospital.residents.size()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
 }

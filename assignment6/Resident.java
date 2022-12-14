@@ -18,4 +18,14 @@ public class Resident {
         return str;
     }
 
+    public int compareTo(Resident resident) {
+        if (this.preferences.size() < resident.preferences.size()) {
+            return 1;
+        } else if (this.preferences.size() == resident.preferences.size()) {
+            return 0;
+        } else {
+            return -1;
+        }
+    }
+
 }

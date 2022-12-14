@@ -53,4 +53,9 @@ public class Main {
         System.out.println("\n\n");
     }
 
+    public int calculateHappinessScore() {
+        // TODO.
+        return 1;
+    }
+
 }

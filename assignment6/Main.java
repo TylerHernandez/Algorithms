@@ -15,6 +15,7 @@ public class Main {
         String[] words;
 
         ArrayList<Resident> clients = new ArrayList<>();
+        ArrayList<Resident> allResidents = new ArrayList<>();
         ArrayList<Hospital> hospitals = new ArrayList<>();
 
         // Flag to make sure while loop runs one time after reader flags end of file
@@ -58,7 +59,9 @@ public class Main {
 
                 // Add the client... who is also a resident... but if they don't have a hospital
                 // are they residents??
-                clients.add(new Resident(id, preferences));
+                Resident r = new Resident(id, preferences);
+                clients.add(r);
+                allResidents.add(r);
             } else if (words[0].contains("H")) {
 
                 String id = words[0];
@@ -113,9 +116,19 @@ public class Main {
 
             Resident currentClient = clients.remove(0);
 
-            // Look to match this client.
-            for (String preference : currentClient.preferences) {
+            Hospital matchedHospital = new Hospital("fake", 0, null);
 
+            // Look to match this client.
+            outerloop: for (String preference : currentClient.preferences) {
+                for (Hospital hospital : hospitals) {
+
+                    if (preference.equals(hospital.id)) {
+                        System.out.println("Matching resident " + currentClient.id + " to " + hospital.id);
+                        matchedHospital = hospital;
+                        matchedHospital.residents.add(currentClient.id);
+                        break outerloop;
+                    }
+                }
             }
 
             // After each match, check our hospital slots to see where we can fit people.
@@ -127,14 +140,24 @@ public class Main {
             // preference from their list.
             System.out.println("\n\n");
             printAllHospitals(hospitals);
-        }
+
+            if (!matchedHospital.id.equals("fake")) {
+                if (matchedHospital.allowedResidents == matchedHospital.residents.size()) {
+                    // Hospital is full, remove this from all clients preferences.
+                    for (Resident client : clients) {
+                        if (client.preferences.contains(matchedHospital.id)) {
+                            client.preferences.remove(matchedHospital.id);
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Error- no match was found for resident " + currentClient);
+                printAllHospitals(hospitals);
+            }
+
+        } // Ends while loop.
 
         System.out.println("\n\n");
-    }
-
-    public int calculateHappinessScore() {
-        // TODO.
-        return 1;
     }
 
     // Helper functions for printing hospitals and residents.

@@ -11,12 +11,16 @@ public class Hospital {
     // preference.
     public ArrayList<String> preferences;
 
-    public Hospital(String id, int allowedResidents,
-            ArrayList<String> residents, ArrayList<String> preferences) {
+    public Hospital(String id, int allowedResidents, ArrayList<String> preferences) {
         this.id = id;
         this.allowedResidents = allowedResidents;
-        this.residents = residents;
+        this.residents = new ArrayList<>();
         this.preferences = preferences;
+    }
+
+    public String toString() {
+        String str = "[" + id + ", residents: " + this.residents + "]";
+        return str;
     }
 
 }

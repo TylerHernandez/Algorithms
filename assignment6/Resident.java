@@ -13,4 +13,9 @@ public class Resident {
         this.preferences = preferences;
     }
 
+    public String toString() {
+        String str = "[" + id + ", preferences: " + this.preferences + "]";
+        return str;
+    }
+
 }

@@ -7,8 +7,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println("\n\n");
 
-        // do stuff.
-
         Reader reader = new Reader("./final-project-text-file.txt");
 
         String line = reader.getNextLine();
